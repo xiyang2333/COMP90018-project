@@ -1,5 +1,7 @@
 package com.unimelb.studypartner.web;
 
+import com.unimelb.studypartner.common.RedisUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -9,8 +11,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HelloWorld {
 
+    @Autowired
+    RedisUtil redisUtil;
+
     @RequestMapping("/hello")
     public String index() {
-        return "Hello World";
+        redisUtil.set("aaa", "Bbb");
+        String a = redisUtil.get("aaa").toString();
+        return a;
     }
 }

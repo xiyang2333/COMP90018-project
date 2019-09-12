@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.unimelb.studypartner.mapper.PostMapper">
+  <resultMap id="BaseResultMap" type="com.unimelb.studypartner.dao.Post">
+    <id column="post_id" jdbcType="INTEGER" property="postId" />
+    <result column="post_type" jdbcType="CHAR" property="postType" />
+    <result column="post_description" jdbcType="VARCHAR" property="postDescription" />
+    <result column="post_price" jdbcType="INTEGER" property="postPrice" />
+    <result column="post_datetime" jdbcType="TIMESTAMP" property="postDatetime" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="latitude" jdbcType="DECIMAL" property="latitude" />
+    <result column="longitude" jdbcType="DECIMAL" property="longitude" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from post
+    where post_id = #{postId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.unimelb.studypartner.dao.Post">
+    insert into post (post_id, post_type, post_description, 
+      post_price, post_datetime, user_id, 
+      latitude, longitude)
+    values (#{postId,jdbcType=INTEGER}, #{postType,jdbcType=CHAR}, #{postDescription,jdbcType=VARCHAR}, 
+      #{postPrice,jdbcType=INTEGER}, #{postDatetime,jdbcType=TIMESTAMP}, #{userId,jdbcType=INTEGER}, 
+      #{latitude,jdbcType=DECIMAL}, #{longitude,jdbcType=DECIMAL})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.unimelb.studypartner.dao.Post">
+    update post
+    set post_type = #{postType,jdbcType=CHAR},
+      post_description = #{postDescription,jdbcType=VARCHAR},
+      post_price = #{postPrice,jdbcType=INTEGER},
+      post_datetime = #{postDatetime,jdbcType=TIMESTAMP},
+      user_id = #{userId,jdbcType=INTEGER},
+      latitude = #{latitude,jdbcType=DECIMAL},
+      longitude = #{longitude,jdbcType=DECIMAL}
+    where post_id = #{postId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select post_id, post_type, post_description, post_price, post_datetime, user_id, 
+    latitude, longitude
+    from post
+    where post_id = #{postId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select post_id, post_type, post_description, post_price, post_datetime, user_id, 
+    latitude, longitude
+    from post
+  </select>
+</mapper>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.unimelb.studypartner.mapper.RelationMapper">
+  <resultMap id="BaseResultMap" type="com.unimelb.studypartner.dao.Relation">
+    <id column="relation_id" jdbcType="INTEGER" property="relationId" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="friend_id" jdbcType="INTEGER" property="friendId" />
+    <result column="status" jdbcType="CHAR" property="status" />
+    <result column="date_time" jdbcType="TIMESTAMP" property="dateTime" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from relation
+    where relation_id = #{relationId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.unimelb.studypartner.dao.Relation">
+    insert into relation (relation_id, user_id, friend_id, 
+      `status`, date_time)
+    values (#{relationId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{friendId,jdbcType=INTEGER}, 
+      #{status,jdbcType=CHAR}, #{dateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.unimelb.studypartner.dao.Relation">
+    update relation
+    set user_id = #{userId,jdbcType=INTEGER},
+      friend_id = #{friendId,jdbcType=INTEGER},
+      `status` = #{status,jdbcType=CHAR},
+      date_time = #{dateTime,jdbcType=TIMESTAMP}
+    where relation_id = #{relationId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select relation_id, user_id, friend_id, `status`, date_time
+    from relation
+    where relation_id = #{relationId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select relation_id, user_id, friend_id, `status`, date_time
+    from relation
+  </select>
+</mapper>

@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * Created by xiyang on 2019/9/4
  */
 @SpringBootApplication
-@MapperScan(basePackages = "com.unimelb.studypartner.dao")
+@MapperScan(basePackages = "com.unimelb.studypartner.mapper")
 public class MainApplication {
 
     public static void main(String[] args) {
