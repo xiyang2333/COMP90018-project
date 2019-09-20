@@ -9,7 +9,6 @@ import com.unimelb.studypartner.web.entity.*;
 import org.apache.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -39,16 +38,16 @@ public class CoreController {
         try{
             RequestHeader header = request.getRequestHeader();
             // safety checks
-            if(header == null || !referenceNoCheck(header.getReferenceNo(), header.getSignature())){
-                response.setResponseStatus(SAFETY_CHECK_STATUS);
-                response.setErrorMessage("safety checking failure");
-            } else {
+//            if(header == null || !referenceNoCheck(header.getReferenceNo(), header.getSignature())){
+//                response.setResponseStatus(SAFETY_CHECK_STATUS);
+//                response.setErrorMessage("safety checking failure");
+//            } else {
                 //get user id
-                int userId = coreService.loginCheck(request.getLoginName(), request.getPassword());
+                int userId = coreService.loginCheck(request.getUserLoginName(), request.getUserPassword());
                 //set response
                 response.setUserId(userId);
                 response.setResponseStatus(1);
-            }
+//            }
 
         } catch (CommonException ex){
             logger.error(ex.getWarnMessage());
@@ -103,11 +102,22 @@ public class CoreController {
         return null;
     }
 
-    // check reference no
-    private static boolean referenceNoCheck(String referenceNo, String signature){
-        String base = referenceNo + SALT;
-        String md5 = DigestUtils.md5DigestAsHex(base.getBytes());
+    @RequestMapping(value = "/alltag", method = RequestMethod.GET)
+    public List<Tag> allTagGet(){
+        try{
+            return coreService.getAllTag();
+        } catch (CommonException e){
+            logger.error(e.getWarnMessage());
+        }
 
-        return md5.equals(signature);
+        return null;
     }
+
+    // check reference no
+//    private static boolean referenceNoCheck(String referenceNo, String signature){
+//        String base = referenceNo + SALT;
+//        String md5 = DigestUtils.md5DigestAsHex(base.getBytes());
+//
+//        return md5.equals(signature);
+//    }
 }

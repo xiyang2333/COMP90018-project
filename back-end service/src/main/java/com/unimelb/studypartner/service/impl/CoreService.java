@@ -66,6 +66,9 @@ public class CoreService implements ICoreService {
     @Override
     public List<MeetingBO> searchMeeting(final MeetingSearchBO meetingSearchBO) throws CommonException {
         try {
+            //TODO
+            List<MeetingBO> meetingBOList = null;
+
             // update user search things
             if (meetingSearchBO.getTagId() != 0) {
                 new Thread(new Runnable() {
@@ -79,15 +82,14 @@ public class CoreService implements ICoreService {
                     }
                 }).start();
             }
+
+            return meetingBOList;
         } catch (Exception ex) {
             CommonException exception = new CommonException();
             exception.setReturnStatus(-1);
             exception.setWarnMessage(ex.getMessage());
             throw exception;
         }
-
-        //TODO
-        return null;
     }
 
     @Override
@@ -137,6 +139,18 @@ public class CoreService implements ICoreService {
         }
 
         return tagList;
+    }
+
+    @Override
+    public List<Tag> getAllTag() throws CommonException{
+        try{
+            return userSearchDAL.getAllTag();
+        } catch (Exception ex){
+            CommonException exception = new CommonException();
+            exception.setReturnStatus(-1);
+            exception.setWarnMessage(ex.getMessage());
+            throw exception;
+        }
     }
 
     private void rankSet(int userId, int tagId) throws Exception {

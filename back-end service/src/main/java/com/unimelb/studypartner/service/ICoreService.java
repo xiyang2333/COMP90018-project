@@ -17,4 +17,6 @@ public interface ICoreService {
 
     // for demo
     public List<Tag> getAllSearchTag(int userId) throws CommonException;
+
+    public List<Tag> getAllTag() throws CommonException;
 }

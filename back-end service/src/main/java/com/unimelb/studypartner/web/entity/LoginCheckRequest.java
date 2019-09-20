@@ -5,9 +5,9 @@ package com.unimelb.studypartner.web.entity;
  */
 public class LoginCheckRequest {
     private RequestHeader requestHeader;
-    private String loginName;
-    private String loginEmail;
-    private String password;
+    private String userLoginName;
+    private String userEmail;
+    private String userPassword;
 
     public RequestHeader getRequestHeader() {
         return requestHeader;
@@ -17,27 +17,27 @@ public class LoginCheckRequest {
         this.requestHeader = requestHeader;
     }
 
-    public String getLoginName() {
-        return loginName;
+    public String getUserLoginName() {
+        return userLoginName;
     }
 
-    public void setLoginName(String loginName) {
-        this.loginName = loginName;
+    public void setUserLoginName(String userLoginName) {
+        this.userLoginName = userLoginName;
     }
 
-    public String getLoginEmail() {
-        return loginEmail;
+    public String getUserEmail() {
+        return userEmail;
     }
 
-    public void setLoginEmail(String loginEmail) {
-        this.loginEmail = loginEmail;
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 
-    public String getPassword() {
-        return password;
+    public String getUserPassword() {
+        return userPassword;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setUserPassword(String userPassword) {
+        this.userPassword = userPassword;
     }
 }
