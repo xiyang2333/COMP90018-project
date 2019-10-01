@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 public class MqttPushClient {
 
     private static Logger logger = Logger.getLogger(MqttPushClient.class);
-    private static final String MQTT_HOST = "tcp://13.229.67.79:61613";
+    private static final String MQTT_HOST = "tcp://13.250.45.8:61613";
     private static final String MQTT_CLIENTID = "StudyPartnerPublisher";
     private static final String MQTT_USERNAME = "admin";
     private static final String MQTT_PASSWORD = "password";

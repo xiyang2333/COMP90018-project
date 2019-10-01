@@ -15,7 +15,7 @@ public class MqttPushCallback implements MqttCallback {
     public void connectionLost(Throwable cause) {
         // maybe reconnect
         logger.info("start reconnect...");
-        MqttPushClient.getInstance().connect();
+//        MqttPushClient.getInstance().connect();
     }
 
     @Override
