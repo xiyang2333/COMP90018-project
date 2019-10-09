@@ -11,7 +11,9 @@ public class User implements Serializable {
 
     private String userEmail;
 
-    private Integer userPhoto;
+    private String userPhoto;
+
+    private String googleId;
 
     private static final long serialVersionUID = 1L;
 
@@ -47,12 +49,20 @@ public class User implements Serializable {
         this.userEmail = userEmail == null ? null : userEmail.trim();
     }
 
-    public Integer getUserPhoto() {
+    public String getUserPhoto() {
         return userPhoto;
     }
 
-    public void setUserPhoto(Integer userPhoto) {
+    public void setUserPhoto(String userPhoto) {
         this.userPhoto = userPhoto;
+    }
+
+    public String getGoogleId() {
+        return googleId;
+    }
+
+    public void setGoogleId(String googleId) {
+        this.googleId = googleId == null ? null : googleId.trim();
     }
 
     @Override
@@ -66,6 +76,7 @@ public class User implements Serializable {
         sb.append(", userPassword=").append(userPassword);
         sb.append(", userEmail=").append(userEmail);
         sb.append(", userPhoto=").append(userPhoto);
+        sb.append(", googleId=").append(googleId);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

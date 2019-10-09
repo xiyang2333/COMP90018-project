@@ -1,4 +1,4 @@
-package com.unimelb.studypartner.dao;
+package com.unimelb.studypartner.common;
 
 /**
  * Created by xiyang on 2019/9/10
@@ -6,6 +6,14 @@ package com.unimelb.studypartner.dao;
 public class CommonException extends Exception {
     private String warnMessage;
     private int returnStatus;
+
+    public CommonException(String warnMessage, int returnStatus) {
+        this.warnMessage = warnMessage;
+        this.returnStatus = returnStatus;
+    }
+
+    public CommonException() {
+    }
 
     public String getWarnMessage() {
         return warnMessage;

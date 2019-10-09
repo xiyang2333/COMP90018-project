@@ -17,7 +17,7 @@ public interface UserTagMapper {
 
     int updateByPrimaryKey(UserTag record);
 
-//    UserTag selectByUserAndTag(Integer userId, Integer tagId);
+    int setUnValidByPrimaryKey(Integer userTagId);
 
     List<UserTag> selectAllByUser(Integer userId);
 }

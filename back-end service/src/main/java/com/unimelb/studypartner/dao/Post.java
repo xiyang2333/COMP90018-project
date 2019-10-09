@@ -7,7 +7,7 @@ import java.util.Date;
 public class Post implements Serializable {
     private Integer postId;
 
-    private String postType;
+    private String postName;
 
     private String postDescription;
 
@@ -31,12 +31,12 @@ public class Post implements Serializable {
         this.postId = postId;
     }
 
-    public String getPostType() {
-        return postType;
+    public String getPostName() {
+        return postName;
     }
 
-    public void setPostType(String postType) {
-        this.postType = postType == null ? null : postType.trim();
+    public void setPostName(String postName) {
+        this.postName = postName == null ? null : postName.trim();
     }
 
     public String getPostDescription() {
@@ -94,7 +94,7 @@ public class Post implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", postId=").append(postId);
-        sb.append(", postType=").append(postType);
+        sb.append(", postName=").append(postName);
         sb.append(", postDescription=").append(postDescription);
         sb.append(", postPrice=").append(postPrice);
         sb.append(", postDatetime=").append(postDatetime);

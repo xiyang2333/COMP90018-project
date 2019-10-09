@@ -26,10 +26,10 @@ public class UserSearchDAL implements IUserSearchDAL {
     TagMapper tagMapper;
 
     @Override
-    public User getUserByNameOrEmail(String loginName) throws SQLException{
+    public User getUserByNameOrEmail(String loginName, String loginEmail) throws SQLException{
         User user = userMapper.selectByUserName(loginName);
         if(user == null){
-            user = userMapper.selectByEmail(loginName);
+            user = userMapper.selectByEmail(loginEmail);
         }
 
         return user;
@@ -38,6 +38,17 @@ public class UserSearchDAL implements IUserSearchDAL {
     @Override
     public List<Tag> getAllTag() throws SQLException {
         return tagMapper.selectAll();
+    }
+
+    @Override
+    public User getUserByGoogleId(String googleId) throws SQLException{
+        return userMapper.seletctByGoogleId(googleId);
+    }
+
+    @Override
+    public int insertUser(User user) throws SQLException{
+        userMapper.insert(user);
+        return user.getUserId();
     }
 
 }

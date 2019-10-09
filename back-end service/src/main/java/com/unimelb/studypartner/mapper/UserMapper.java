@@ -20,4 +20,6 @@ public interface UserMapper {
     User selectByUserName(String userName);
 
     User selectByEmail(String email);
+
+    User seletctByGoogleId(String googleId);
 }

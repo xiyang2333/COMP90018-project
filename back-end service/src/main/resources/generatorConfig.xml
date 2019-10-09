@@ -8,7 +8,7 @@
     <!-- 引入配置文件 -->
     <properties resource="generator.properties"/>
     <!--classPathEntry:数据库的JDBC驱动,换成你自己的驱动位置 可选 -->
-    <classPathEntry location="C:\Users\xiyang\Downloads\mysql-connector-java-5.1.48\mysql-connector-java-5.1.48-bin.jar" />
+    <classPathEntry location="C:\Users\xiyang\Downloads\mysql-connector-java-8.0.17\mysql-connector-java-8.0.17\mysql-connector-java-8.0.17.jar" />
 
     <!-- 一个数据库一个context -->
     <!--defaultModelType="flat" 大数据字段，不分表 -->
@@ -58,8 +58,8 @@
             <property name="enableSubPackages" value="false" />
         </javaClientGenerator>
         <!-- table可以有多个,每个数据库中的表都可以写一个table，tableName表示要匹配的数据库表,也可以在tableName属性中通过使用%通配符来匹配所有数据库表,只有匹配的表才会自动生成文件 -->
-        <table tableName="user_tag" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
-            <property name="userTagActualColumnNames" value="false" />
+        <table tableName="post" enableCountByExample="true" enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true" selectByExampleQueryId="true">
+            <property name="postActualColumnNames" value="false" />
             <!-- 数据库表主键 -->
             <generatedKey column="id" sqlStatement="Mysql" identity="true" />
         </table>

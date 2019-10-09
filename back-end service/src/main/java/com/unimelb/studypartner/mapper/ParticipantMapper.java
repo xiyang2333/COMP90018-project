@@ -1,6 +1,7 @@
 package com.unimelb.studypartner.mapper;
 
 import com.unimelb.studypartner.dao.Participant;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -16,4 +17,6 @@ public interface ParticipantMapper {
     List<Participant> selectAll();
 
     int updateByPrimaryKey(Participant record);
+
+    List<Participant> selectByUser(@Param("userId") int userId, @Param("offset") int offset, @Param("pageSize") int pageSize);
 }

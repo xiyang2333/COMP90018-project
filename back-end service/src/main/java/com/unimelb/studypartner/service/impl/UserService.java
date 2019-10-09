@@ -1,34 +1,34 @@
 package com.unimelb.studypartner.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.unimelb.studypartner.common.PictureService;
 import com.unimelb.studypartner.common.RedisUtil;
 import com.unimelb.studypartner.dal.ITagDAL;
 import com.unimelb.studypartner.dal.IUserSearchDAL;
-import com.unimelb.studypartner.dao.CommonException;
+import com.unimelb.studypartner.common.CommonException;
 import com.unimelb.studypartner.dao.Tag;
 import com.unimelb.studypartner.dao.User;
 import com.unimelb.studypartner.dao.UserTag;
-import com.unimelb.studypartner.service.ICoreService;
+import com.unimelb.studypartner.service.IUserService;
 import com.unimelb.studypartner.service.bo.MeetingBO;
 import com.unimelb.studypartner.service.bo.MeetingSearchBO;
+import com.unimelb.studypartner.service.bo.RegisterBO;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by xiyang on 2019/9/10
  */
 @Service
-public class CoreService implements ICoreService {
-    private static Logger logger = Logger.getLogger(CoreService.class);
+public class UserService implements IUserService {
+    private static Logger logger = Logger.getLogger(UserService.class);
     private static final String RANK_TITLE = "USER_SEARCH_RANK";
+    private static final String USER_PHOTO = "user_photo_";
 
     @Autowired
     RedisUtil redisUtil;
@@ -39,25 +39,25 @@ public class CoreService implements ICoreService {
     @Autowired
     IUserSearchDAL userSearchDAL;
 
+    @Autowired
+    PictureService pictureService;
+
     @Override
     public int loginCheck(String loginName, String password) throws CommonException {
         try {
-            User user = userSearchDAL.getUserByNameOrEmail(loginName);
+            User user = userSearchDAL.getUserByNameOrEmail(loginName, loginName);
 
-            if(user == null || !password.equals(user.getUserPassword())){
-                CommonException exception = new CommonException();
-                exception.setReturnStatus(-1);
-                exception.setWarnMessage("user check failed: no user or wrong password");
+            if (user == null || !password.equals(user.getUserPassword())) {
+                CommonException exception = new CommonException("user check failed: no user or wrong password", -1);
                 throw exception;
             }
 
             return user.getUserId();
+        } catch (CommonException ex) {
+            throw ex;
         } catch (SQLException e) {
             logger.error(e.getMessage());
-
-            CommonException exception = new CommonException();
-            exception.setReturnStatus(-1);
-            exception.setWarnMessage(e.getMessage());
+            CommonException exception = new CommonException(e.getMessage(), -1);
 
             throw exception;
         }
@@ -85,9 +85,7 @@ public class CoreService implements ICoreService {
 
             return meetingBOList;
         } catch (Exception ex) {
-            CommonException exception = new CommonException();
-            exception.setReturnStatus(-1);
-            exception.setWarnMessage(ex.getMessage());
+            CommonException exception = new CommonException(ex.getMessage(), -1);
             throw exception;
         }
     }
@@ -98,17 +96,17 @@ public class CoreService implements ICoreService {
         try {
             //get All tags
             List<Tag> originalTagList = tagDAL.getAllTag();
-            if(originalTagList == null){
+            if (originalTagList == null) {
                 originalTagList = new ArrayList<>();
             }
             //get users tag rank
             List<UserTag> userTags = rankGet(userId);
             //use count to only find top 3
             int count = 3;
-            if(userTags != null) {
+            if (userTags != null) {
                 //add user tag first
                 for (UserTag userTag : userTags) {
-                    if(count == 0){
+                    if (count == 0) {
                         break;
                     }
                     for (Tag tag : originalTagList) {
@@ -126,15 +124,13 @@ public class CoreService implements ICoreService {
             all.setTagName("---ALL---");
             tagList.add(all);
             //add rest
-            for(Tag tag : originalTagList){
-                if(!tagList.contains(tag)){
+            for (Tag tag : originalTagList) {
+                if (!tagList.contains(tag)) {
                     tagList.add(tag);
                 }
             }
         } catch (Exception ex) {
-            CommonException exception = new CommonException();
-            exception.setReturnStatus(-1);
-            exception.setWarnMessage(ex.getMessage());
+            CommonException exception = new CommonException(ex.getMessage(), -1);
             throw exception;
         }
 
@@ -142,14 +138,83 @@ public class CoreService implements ICoreService {
     }
 
     @Override
-    public List<Tag> getAllTag() throws CommonException{
-        try{
+    public List<Tag> getAllTag() throws CommonException {
+        try {
             return userSearchDAL.getAllTag();
-        } catch (Exception ex){
-            CommonException exception = new CommonException();
-            exception.setReturnStatus(-1);
-            exception.setWarnMessage(ex.getMessage());
+        } catch (Exception ex) {
+            CommonException exception = new CommonException(ex.getMessage(), -1);
             throw exception;
+        }
+    }
+
+    public RegisterBO register(User user, String userPic) throws CommonException {
+        RegisterBO registerBO = new RegisterBO();
+        try {
+            boolean newUser = true;
+            // check user exists or not
+            User pastUser = userSearchDAL.getUserByNameOrEmail(user.getUserLoginName(), user.getUserEmail());
+            if (pastUser != null) {
+                CommonException exception = new CommonException("user Name or email exists", -1);
+                throw exception;
+            }
+            if (user.getGoogleId() != null && user.getGoogleId().length() > 0) {
+                // search db
+                User dbUser = userSearchDAL.getUserByGoogleId(user.getGoogleId());
+                if (dbUser != null && dbUser.getUserId() > 0) {
+                    registerBO.setUserId(dbUser.getUserId());
+                    newUser = false;
+                }
+            }
+            if (newUser) {
+                // deal with pic
+                if (userPic != null && userPic.length() > 0) {
+                    String pathName = pictureService.uploadPic(userPic);
+                    user.setUserPhoto(pathName);
+                }
+                // insert db
+                int userId = userSearchDAL.insertUser(user);
+                registerBO.setUserId(userId);
+            }
+            registerBO.setNewUser(newUser);
+        } catch (CommonException ex) {
+            throw ex;
+        } catch (Exception ex) {
+            CommonException exception = new CommonException(ex.getMessage(), -1);
+            throw exception;
+        }
+        return registerBO;
+    }
+
+    public void updateTag(int userId, List<Integer> tags) throws CommonException {
+        try {
+            // get all user tags;
+            List<UserTag> userTags = tagDAL.getAllUserTag(userId);
+            //add sets use tag id
+            Set<Integer> addSets = new HashSet<>(tags);
+            // deleteSets use user tag id
+            Set<Integer> deleteSets = new HashSet<>();
+            if (userTags != null && userTags.size() > 0) {
+                for (UserTag userTag : userTags) {
+                    boolean contains = false;
+                    for (int tag : tags) {
+                        if (tag == userTag.getTagId()) {
+                            contains = true;
+                            break;
+                        }
+                    }
+                    if (!contains) {
+                        deleteSets.add(userTag.getUserTagId());
+                    }
+                    addSets.remove(userTag.getTagId());
+                }
+            }
+            tagDAL.updateUserTags(deleteSets, addSets, userId);
+
+            // delete redis
+            String redisKey = RANK_TITLE + userId;
+            redisUtil.del(redisKey);
+        } catch (Exception ex) {
+            throw new CommonException(ex.getMessage(), -1);
         }
     }
 
@@ -160,7 +225,7 @@ public class CoreService implements ICoreService {
         String rankListStr = obj == null ? "" : obj.toString();
         List<UserTag> userTags = new ArrayList<>();
 
-        if(rankListStr != null && rankListStr.length() > 0){
+        if (rankListStr != null && rankListStr.length() > 0) {
             userTags = JSON.parseArray(rankListStr, UserTag.class);
         }
 
@@ -208,7 +273,7 @@ public class CoreService implements ICoreService {
         String rankListStr = obj == null ? "" : obj.toString();
         List<UserTag> userTags = new ArrayList<>();
 
-        if(rankListStr != null && rankListStr.length() > 0){
+        if (rankListStr != null && rankListStr.length() > 0) {
             userTags = JSON.parseArray(rankListStr, UserTag.class);
         }
 

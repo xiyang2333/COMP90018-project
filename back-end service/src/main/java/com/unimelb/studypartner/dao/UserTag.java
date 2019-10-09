@@ -6,13 +6,15 @@ import java.util.Date;
 public class UserTag implements Serializable {
     private Integer userTagId;
 
-    private Integer userId;
-
-    private Integer tagId;
-
     private Integer times;
 
     private Date lastSearchTime;
+
+    private Integer tagId;
+
+    private Integer userId;
+
+    private String isValid;
 
     private static final long serialVersionUID = 1L;
 
@@ -22,22 +24,6 @@ public class UserTag implements Serializable {
 
     public void setUserTagId(Integer userTagId) {
         this.userTagId = userTagId;
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
-    public Integer getTagId() {
-        return tagId;
-    }
-
-    public void setTagId(Integer tagId) {
-        this.tagId = tagId;
     }
 
     public Integer getTimes() {
@@ -56,6 +42,30 @@ public class UserTag implements Serializable {
         this.lastSearchTime = lastSearchTime;
     }
 
+    public Integer getTagId() {
+        return tagId;
+    }
+
+    public void setTagId(Integer tagId) {
+        this.tagId = tagId;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public String getIsValid() {
+        return isValid;
+    }
+
+    public void setIsValid(String isValid) {
+        this.isValid = isValid == null ? null : isValid.trim();
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -63,10 +73,11 @@ public class UserTag implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", userTagId=").append(userTagId);
-        sb.append(", userId=").append(userId);
-        sb.append(", tagId=").append(tagId);
         sb.append(", times=").append(times);
         sb.append(", lastSearchTime=").append(lastSearchTime);
+        sb.append(", tagId=").append(tagId);
+        sb.append(", userId=").append(userId);
+        sb.append(", isValid=").append(isValid);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

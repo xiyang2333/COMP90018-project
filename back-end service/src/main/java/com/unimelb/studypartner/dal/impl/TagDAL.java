@@ -2,7 +2,6 @@ package com.unimelb.studypartner.dal.impl;
 
 import com.unimelb.studypartner.dal.ITagDAL;
 import com.unimelb.studypartner.dao.Tag;
-import com.unimelb.studypartner.dao.User;
 import com.unimelb.studypartner.dao.UserTag;
 import com.unimelb.studypartner.mapper.TagMapper;
 import com.unimelb.studypartner.mapper.UserTagMapper;
@@ -12,9 +11,9 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by xiyang on 2019/9/11
@@ -50,18 +49,34 @@ public class TagDAL implements ITagDAL {
 //    }
 
     @Override
-    public List<UserTag> getAllUserTag(int userId) throws SQLException{
+    public List<UserTag> getAllUserTag(int userId) throws SQLException {
         return userTagMapper.selectAllByUser(userId);
     }
 
     @Override
-    public void updateUserTag(UserTag userTag) throws SQLException{
+    public void updateUserTag(UserTag userTag) throws SQLException {
         userTagMapper.updateByPrimaryKey(userTag);
     }
 
     @Override
-    public List<Tag> getAllTag() throws SQLException{
+    public List<Tag> getAllTag() throws SQLException {
         return tagMapper.selectAll();
     }
 
+    @Override
+    @Transactional
+    public void updateUserTags(Set<Integer> deleteTags, Set<Integer> addTags, int userId) throws SQLException {
+        for (Integer deleteTag : deleteTags) {
+            userTagMapper.setUnValidByPrimaryKey(deleteTag);
+        }
+        for (Integer addTag : addTags) {
+            UserTag userTag = new UserTag();
+            userTag.setUserId(userId);
+            userTag.setIsValid("T");
+            userTag.setLastSearchTime(new Date());
+            userTag.setTimes(0);
+            userTag.setTagId(addTag);
+            userTagMapper.insert(userTag);
+        }
+    }
 }

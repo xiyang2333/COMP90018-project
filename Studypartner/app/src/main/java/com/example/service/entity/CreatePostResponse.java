@@ -1,15 +1,13 @@
-package com.unimelb.studypartner.web.entity;
-
-import java.util.List;
+package com.example.service.entity;
 
 /**
- * Created by xiyang on 2019/9/11
+ * Created by xiyang on 2019/10/9
  */
-public class SearchMeetingResponse {
+public class CreatePostResponse {
     private int responseStatus;
     private String errorMessage;
 
-    private List<MeetingDetail> meetingDetailList;
+    private int postId;
 
     public int getResponseStatus() {
         return responseStatus;
@@ -27,12 +25,11 @@ public class SearchMeetingResponse {
         this.errorMessage = errorMessage;
     }
 
-    public List<MeetingDetail> getMeetingDetailList() {
-        return meetingDetailList;
+    public int getPostId() {
+        return postId;
     }
 
-    public void setMeetingDetailList(List<MeetingDetail> meetingDetailList) {
-        this.meetingDetailList = meetingDetailList;
+    public void setPostId(int postId) {
+        this.postId = postId;
     }
-
 }

@@ -1,6 +1,5 @@
 package com.example.login;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -9,7 +8,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
 import android.content.Intent;
@@ -87,6 +85,25 @@ public class MainActivity extends AppCompatActivity {
                 .requestEmail()
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
+        //http get test
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                TagListResponse response = HttpClient.httpGet("http://10.0.2.2:8080/studypartner/alltag", TagListResponse.class);
+//            }
+//        }).start();
+
+        //http post test
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                LoginCheckRequest request = new LoginCheckRequest();
+//                request.setUserLoginName("xiyang2333");
+//                request.setUserPassword("E10ADC3949BA59ABBE56E057F20F883E");
+//                LoginCheckResponse response = HttpClient.httpPost("http://10.0.2.2:8080/studypartner/logincheck", request, LoginCheckRequest.class, LoginCheckResponse.class);
+//            }
+//        }).start();
     }
 
     @Override
