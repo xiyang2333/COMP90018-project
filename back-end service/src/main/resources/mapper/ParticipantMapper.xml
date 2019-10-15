@@ -40,4 +40,10 @@
     where user_id = #{userId} and participant_status != 'N'
     limit #{offset},#{pageSize}
   </select>
+
+  <select id="selectByActivity" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select participant_id, user_id, meeting_id, participant_status
+    from participant
+    where meeting_id = #{activityId, jdbcType=INTEGER}
+  </select>
 </mapper>

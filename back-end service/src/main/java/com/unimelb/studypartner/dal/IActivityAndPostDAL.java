@@ -2,6 +2,8 @@ package com.unimelb.studypartner.dal;
 
 import com.unimelb.studypartner.dao.Activity;
 import com.unimelb.studypartner.dao.Post;
+import com.unimelb.studypartner.dao.PostPhoto;
+import com.unimelb.studypartner.dao.User;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -25,4 +27,13 @@ public interface IActivityAndPostDAL {
     public List<Activity> getJoinActivityByUser(int userId, int offset, int pageSize) throws SQLException;
 
     public List<Post> getPostByUser(int userId, int offset, int pageSize) throws SQLException;
+
+    public int createActivity(Activity activity, List<Integer> userList) throws SQLException;
+
+    public List<User> getUserListByActivity(int activityId) throws SQLException;
+
+    public int createPost(Post post, List<String> photoList) throws SQLException;
+
+    public List<PostPhoto> getPostPhotoList(int postId) throws SQLException;
+
 }

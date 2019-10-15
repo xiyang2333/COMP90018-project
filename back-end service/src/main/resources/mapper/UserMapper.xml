@@ -55,4 +55,13 @@
     from user
     where google_id = #{googleId,jdbcType=VARCHAR}
   </select>
+
+  <select id="selectInList"  resultMap="BaseResultMap">
+    select user_id, user_login_name, user_password, user_email, user_photo, google_id
+    from user
+    where user_id IN
+    <foreach collection="array" item="id" index="index" open="(" close=")" separator=",">
+      #{id}
+    </foreach>
+  </select>
 </mapper>

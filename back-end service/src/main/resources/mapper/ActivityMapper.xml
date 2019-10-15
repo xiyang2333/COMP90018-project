@@ -18,7 +18,7 @@
     delete from activity
     where activity_id = #{activityId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.unimelb.studypartner.dao.Activity">
+  <insert id="insert"  useGeneratedKeys="true" keyProperty="activityId"  parameterType="com.unimelb.studypartner.dao.Activity">
     insert into activity (activity_id, user_id, activity_name, 
       activity_location, activity_description, 
       activity_time, activity_create_time, tag_id, 

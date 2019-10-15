@@ -19,4 +19,6 @@ public interface IUserSearchDAL {
 
     public int insertUser(User user) throws SQLException;
 
+    public User getUser(int userId) throws SQLException;
+
 }

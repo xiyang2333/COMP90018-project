@@ -7,9 +7,7 @@ import com.unimelb.studypartner.dao.Tag;
 import com.unimelb.studypartner.dao.User;
 import com.unimelb.studypartner.service.IMainPageService;
 import com.unimelb.studypartner.service.IUserService;
-import com.unimelb.studypartner.service.bo.MeetingBO;
-import com.unimelb.studypartner.service.bo.MeetingSearchBO;
-import com.unimelb.studypartner.service.bo.RegisterBO;
+import com.unimelb.studypartner.service.bo.*;
 import com.unimelb.studypartner.web.entity.*;
 import org.apache.log4j.Logger;
 import org.springframework.beans.BeanUtils;
@@ -235,4 +233,112 @@ public class CoreController {
         return response;
     }
 
+    @RequestMapping(value = "/createactivity", method = RequestMethod.POST)
+    public CreateActivityResponse createActivity(@RequestBody CreateActivityRequest request){
+        CreateActivityResponse response = new CreateActivityResponse();
+        try{
+            ActivityBO activityBO = new ActivityBO();
+            BeanUtils.copyProperties(request, activityBO);
+            int activityId = mainPageService.CreateActivity(activityBO, request.getUserList());
+
+            response.setActivityId(activityId);
+            response.setResponseStatus(0);
+        } catch (CommonException ex){
+            logger.error(ex.getWarnMessage());
+
+            response.setResponseStatus(ex.getReturnStatus());
+            response.setErrorMessage(ex.getWarnMessage());
+        }
+        return response;
+    }
+
+    @RequestMapping(value = "/getactivity", method = RequestMethod.POST)
+    public GetActivityResponse getActivity(@RequestBody GetActivityRequest request){
+        GetActivityResponse response = new GetActivityResponse();
+        try{
+            ActivityBO activityBO = mainPageService.getActivity(request.getActivityId(), request.getUserId());
+            BeanUtils.copyProperties(activityBO, response);
+            if(activityBO.getCreateUser() != null){
+                UserPart userPart = new UserPart();
+                BeanUtils.copyProperties(activityBO.getCreateUser(), userPart);
+                response.setCreateUser(userPart);
+            }
+            if(activityBO.getUserBOList() != null && activityBO.getUserBOList().size() > 0){
+                List<UserPart> userParts = new ArrayList<>();
+                for(UserBO userBO : activityBO.getUserBOList()){
+                    UserPart userPart = new UserPart();
+                    BeanUtils.copyProperties(userBO, userPart);
+
+                    userParts.add(userPart);
+                }
+                response.setUserList(userParts);
+            }
+            response.setResponseStatus(0);
+        } catch (CommonException ex){
+            logger.error(ex.getWarnMessage());
+
+            response.setResponseStatus(ex.getReturnStatus());
+            response.setErrorMessage(ex.getWarnMessage());
+        }
+        return response;
+    }
+
+    @RequestMapping(value = "/createpost", method = RequestMethod.POST)
+    public CreatePostResponse createPost(@RequestBody CreatePostRequest request){
+        CreatePostResponse response = new CreatePostResponse();
+        try{
+            PostBO postBO = new PostBO();
+            BeanUtils.copyProperties(request, postBO);
+            int id = mainPageService.CreatePost(postBO, request.getPhotoList());
+            response.setPostId(id);
+            response.setResponseStatus(0);
+
+        } catch (CommonException ex){
+
+            logger.error(ex.getWarnMessage());
+
+            response.setResponseStatus(ex.getReturnStatus());
+            response.setErrorMessage(ex.getWarnMessage());
+        }
+        return response;
+    }
+
+    @RequestMapping(value = "/getpost", method = RequestMethod.POST)
+    public GetPostResponse getPost(@RequestBody GetPostRequest request){
+        GetPostResponse response = new GetPostResponse();
+        try{
+            PostBO postBO = mainPageService.getPost(request.getPostId(), request.getUserId());
+            BeanUtils.copyProperties(postBO, response);
+            response.setPhotoList(postBO.getPhotoList());
+
+            if(postBO.getCreateUser() != null){
+                UserPart userPart = new UserPart();
+                BeanUtils.copyProperties(postBO.getCreateUser(), userPart);
+                response.setCreateUser(userPart);
+            }
+
+            if(postBO.getAnswerBOList() != null && postBO.getAnswerBOList().size() > 0){
+                List<AnswerPart> answerParts = new ArrayList<>();
+                for(AnswerBO answerBO : postBO.getAnswerBOList()){
+                    AnswerPart answerPart = new AnswerPart();
+                    BeanUtils.copyProperties(answerBO, answerPart);
+                    answerPart.setPhotoList(answerBO.getPhotoList());
+
+                    if(answerBO.getUser() != null){
+                        UserPart userPart = new UserPart();
+                        BeanUtils.copyProperties(answerBO.getUser(), userPart);
+                        answerPart.setUser(userPart);
+                    }
+                }
+
+                response.setAnswerList(answerParts);
+            }
+        } catch (CommonException ex){
+            logger.error(ex.getWarnMessage());
+
+            response.setResponseStatus(ex.getReturnStatus());
+            response.setErrorMessage(ex.getWarnMessage());
+        }
+        return response;
+    }
 }

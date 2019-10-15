@@ -51,4 +51,9 @@ public class UserSearchDAL implements IUserSearchDAL {
         return user.getUserId();
     }
 
+    @Override
+    public User getUser(int userId) throws SQLException{
+        return userMapper.selectByPrimaryKey(userId);
+    }
+
 }

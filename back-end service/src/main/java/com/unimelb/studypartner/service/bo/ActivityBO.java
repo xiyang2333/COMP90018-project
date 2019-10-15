@@ -1,42 +1,41 @@
-package com.unimelb.studypartner.web.entity;
+package com.unimelb.studypartner.service.bo;
 
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
 /**
- * Created by xiyang on 2019/10/9
+ * Created by xiyang on 2019/10/10
  */
-public class GetActivityResponse {
-    private int responseStatus;
-    private String errorMessage;
-
+public class ActivityBO {
+    private Integer activityId;
+    private Integer userId;
     private String activityName;
     private String activityLocation;
     private String activityDescription;
     private Date time;
-    private int tagId;
+    private Integer tagId;
+    private String picture;
     private BigDecimal latitude;
     private BigDecimal longitude;
-    private List<UserPart> userList;
-    private UserPart createUser;
+    private List<UserBO> userBOList;
+    private UserBO createUser;
     private int participantId;
-    private String picture;
 
-    public int getResponseStatus() {
-        return responseStatus;
+    public Integer getActivityId() {
+        return activityId;
     }
 
-    public void setResponseStatus(int responseStatus) {
-        this.responseStatus = responseStatus;
+    public void setActivityId(Integer activityId) {
+        this.activityId = activityId;
     }
 
-    public String getErrorMessage() {
-        return errorMessage;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setErrorMessage(String errorMessage) {
-        this.errorMessage = errorMessage;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public String getActivityName() {
@@ -71,12 +70,20 @@ public class GetActivityResponse {
         this.time = time;
     }
 
-    public int getTagId() {
+    public Integer getTagId() {
         return tagId;
     }
 
-    public void setTagId(int tagId) {
+    public void setTagId(Integer tagId) {
         this.tagId = tagId;
+    }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
     }
 
     public BigDecimal getLatitude() {
@@ -95,19 +102,19 @@ public class GetActivityResponse {
         this.longitude = longitude;
     }
 
-    public List<UserPart> getUserList() {
-        return userList;
+    public List<UserBO> getUserBOList() {
+        return userBOList;
     }
 
-    public void setUserList(List<UserPart> userList) {
-        this.userList = userList;
+    public void setUserBOList(List<UserBO> userBOList) {
+        this.userBOList = userBOList;
     }
 
-    public UserPart getCreateUser() {
+    public UserBO getCreateUser() {
         return createUser;
     }
 
-    public void setCreateUser(UserPart createUser) {
+    public void setCreateUser(UserBO createUser) {
         this.createUser = createUser;
     }
 
@@ -117,13 +124,5 @@ public class GetActivityResponse {
 
     public void setParticipantId(int participantId) {
         this.participantId = participantId;
-    }
-
-    public String getPicture() {
-        return picture;
-    }
-
-    public void setPicture(String picture) {
-        this.picture = picture;
     }
 }

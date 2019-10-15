@@ -1,29 +1,24 @@
-package com.unimelb.studypartner.dao;
+package com.unimelb.studypartner.service.bo;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
-public class Post implements Serializable {
+/**
+ * Created by xiyang on 2019/10/10
+ */
+public class PostBO {
     private Integer postId;
-
     private String postName;
-
     private String postDescription;
-
-    private Integer postPrice;
-
     private Date postDatetime;
-
     private Integer userId;
-
     private BigDecimal latitude;
-
     private BigDecimal longitude;
-
     private Integer tagId;
-
-    private static final long serialVersionUID = 1L;
+    private UserBO createUser;
+    private List<AnswerBO> answerBOList;
+    private List<String> photoList;
 
     public Integer getPostId() {
         return postId;
@@ -38,7 +33,7 @@ public class Post implements Serializable {
     }
 
     public void setPostName(String postName) {
-        this.postName = postName == null ? null : postName.trim();
+        this.postName = postName;
     }
 
     public String getPostDescription() {
@@ -46,15 +41,7 @@ public class Post implements Serializable {
     }
 
     public void setPostDescription(String postDescription) {
-        this.postDescription = postDescription == null ? null : postDescription.trim();
-    }
-
-    public Integer getPostPrice() {
-        return postPrice;
-    }
-
-    public void setPostPrice(Integer postPrice) {
-        this.postPrice = postPrice;
+        this.postDescription = postDescription;
     }
 
     public Date getPostDatetime() {
@@ -97,23 +84,27 @@ public class Post implements Serializable {
         this.tagId = tagId;
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", postId=").append(postId);
-        sb.append(", postName=").append(postName);
-        sb.append(", postDescription=").append(postDescription);
-        sb.append(", postPrice=").append(postPrice);
-        sb.append(", postDatetime=").append(postDatetime);
-        sb.append(", userId=").append(userId);
-        sb.append(", latitude=").append(latitude);
-        sb.append(", longitude=").append(longitude);
-        sb.append(", tagId=").append(tagId);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
+    public UserBO getCreateUser() {
+        return createUser;
+    }
+
+    public void setCreateUser(UserBO createUser) {
+        this.createUser = createUser;
+    }
+
+    public List<AnswerBO> getAnswerBOList() {
+        return answerBOList;
+    }
+
+    public void setAnswerBOList(List<AnswerBO> answerBOList) {
+        this.answerBOList = answerBOList;
+    }
+
+    public List<String> getPhotoList() {
+        return photoList;
+    }
+
+    public void setPhotoList(List<String> photoList) {
+        this.photoList = photoList;
     }
 }

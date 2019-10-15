@@ -3,6 +3,7 @@ package com.unimelb.studypartner.dal.impl;
 import com.unimelb.studypartner.dal.IActivityAndPostDAL;
 import com.unimelb.studypartner.dao.*;
 import com.unimelb.studypartner.mapper.*;
+import com.unimelb.studypartner.service.bo.ActivityBO;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -33,6 +34,12 @@ public class ActivityAndPostDAL implements IActivityAndPostDAL {
 
     @Autowired
     AnswerPhotoMapper answerPhotoMapper;
+
+    @Autowired
+    UserMapper userMapper;
+
+    @Autowired
+    PostPhotoMapper postPhotoMapper;
 
     @Override
     public int joinActivity(int userId, int activityId) throws SQLException {
@@ -70,14 +77,14 @@ public class ActivityAndPostDAL implements IActivityAndPostDAL {
         comment.setUserId(userId);
         comment.setPostId(postId);
         comment.setCommentDescription(answer);
-        int id = commentMapper.insert(comment);
+        commentMapper.insert(comment);
         for(String photo : photoList){
             AnswerPhoto answerPhoto = new AnswerPhoto();
-            answerPhoto.setCommentId(id);
+            answerPhoto.setCommentId(comment.getCommentId());
             answerPhoto.setPhoto(photo);
             answerPhotoMapper.insert(answerPhoto);
         }
-        return id;
+        return comment.getCommentId();
     }
 
     @Override
@@ -102,5 +109,64 @@ public class ActivityAndPostDAL implements IActivityAndPostDAL {
     @Override
     public List<Post> getPostByUser(int userId, int offset, int pageSize) throws SQLException {
         return postMapper.selctByUserId(userId, offset, pageSize);
+    }
+
+    @Override
+    @Transactional
+    public int createActivity(Activity activity, List<Integer> userList) throws SQLException{
+        activityMapper.insert(activity);
+        int activityId = activity.getActivityId();
+        if(userList != null && userList.size() > 0){
+            for(Integer userId : userList){
+
+                Participant participant = new Participant();
+                participant.setMeetingId(activityId);
+                participant.setUserId(userId);
+                // participant status "J" -> join "S" -> sign in "W" -> wait to sign in N -> unjoin
+                participant.setParticipantStatus("J");
+
+                participantMapper.insert(participant);
+            }
+        }
+        return activityId;
+    }
+
+    @Override
+    @Transactional
+    public List<User> getUserListByActivity(int activityId) throws SQLException{
+        List<Participant> participants = participantMapper.selectByActivity(activityId);
+        if(participants != null && participants.size() > 0){
+            int[] ids = new int[participants.size()];
+
+            for(int i = 0; i < participants.size(); i++){
+                ids[i] = participants.get(i).getUserId();
+            }
+            // get user List
+            return userMapper.selectInList(ids);
+        }
+        return null;
+    }
+
+    @Override
+    @Transactional
+    public int createPost(Post post, List<String> photoList) throws SQLException{
+        postMapper.insert(post);
+        int postId = post.getPostId();
+
+        if(photoList != null && photoList.size() > 0){
+            for(String photo : photoList){
+                PostPhoto postPhoto = new PostPhoto();
+                postPhoto.setPostId(postId);
+                postPhoto.setPhoto(photo);
+
+                postPhotoMapper.insert(postPhoto);
+            }
+        }
+        return postId;
+    }
+
+    @Override
+    public List<PostPhoto> getPostPhotoList(int postId) throws SQLException{
+        return postPhotoMapper.selectByPostId(postId);
     }
 }

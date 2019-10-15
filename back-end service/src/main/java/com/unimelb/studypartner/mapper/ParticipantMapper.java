@@ -19,4 +19,6 @@ public interface ParticipantMapper {
     int updateByPrimaryKey(Participant record);
 
     List<Participant> selectByUser(@Param("userId") int userId, @Param("offset") int offset, @Param("pageSize") int pageSize);
+
+    List<Participant> selectByActivity(int activityId);
 }

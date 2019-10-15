@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.unimelb.studypartner.mapper.PostPhotoMapper">
+  <resultMap id="BaseResultMap" type="com.unimelb.studypartner.dao.PostPhoto">
+    <id column="post_photo_id" jdbcType="INTEGER" property="postPhotoId" />
+    <result column="post_id" jdbcType="INTEGER" property="postId" />
+    <result column="photo" jdbcType="VARCHAR" property="photo" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from post_photo
+    where post_photo_id = #{postPhotoId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.unimelb.studypartner.dao.PostPhoto">
+    insert into post_photo (post_photo_id, post_id, photo
+      )
+    values (#{postPhotoId,jdbcType=INTEGER}, #{postId,jdbcType=INTEGER}, #{photo,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.unimelb.studypartner.dao.PostPhoto">
+    update post_photo
+    set post_id = #{postId,jdbcType=INTEGER},
+      photo = #{photo,jdbcType=VARCHAR}
+    where post_photo_id = #{postPhotoId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select post_photo_id, post_id, photo
+    from post_photo
+    where post_photo_id = #{postPhotoId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select post_photo_id, post_id, photo
+    from post_photo
+  </select>
+
+  <select id="selectByPostId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select post_photo_id, post_id, photo
+    from post_photo
+    where post_id = #{postId,jdbcType=INTEGER}
+  </select>
+</mapper>

@@ -4,15 +4,15 @@ package com.unimelb.studypartner.web.entity;
  * Created by xiyang on 2019/10/9
  */
 public class GetPostRequest {
-    private int activityId;
+    private int postId;
     private int userId;
 
-    public int getActivityId() {
-        return activityId;
+    public int getPostId() {
+        return postId;
     }
 
-    public void setActivityId(int activityId) {
-        this.activityId = activityId;
+    public void setPostId(int postId) {
+        this.postId = postId;
     }
 
     public int getUserId() {

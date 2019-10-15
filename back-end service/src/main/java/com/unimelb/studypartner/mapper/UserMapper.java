@@ -22,4 +22,6 @@ public interface UserMapper {
     User selectByEmail(String email);
 
     User seletctByGoogleId(String googleId);
+
+    List<User> selectInList(int[] ids);
 }
