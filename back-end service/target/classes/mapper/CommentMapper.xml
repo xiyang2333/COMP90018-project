@@ -12,7 +12,7 @@
     delete from comment
     where comment_id = #{commentId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.unimelb.studypartner.dao.Comment">
+  <insert id="insert" useGeneratedKeys="true" keyProperty="commentId" parameterType="com.unimelb.studypartner.dao.Comment">
     insert into comment (comment_id, post_id, user_id, 
       comment_description, comment_status)
     values (#{commentId,jdbcType=INTEGER}, #{postId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, 
