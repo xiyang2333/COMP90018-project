@@ -10,6 +10,8 @@ public class RegisterRequest {
     private String userPic;
     private String googleId;
 
+
+
     public String getUserLoginName() {
         return userLoginName;
     }
