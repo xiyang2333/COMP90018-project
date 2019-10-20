@@ -55,16 +55,16 @@ public class RegisterActivity extends AppCompatActivity {
 
 
 
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                RegisterRequest request=  new RegisterRequest();
-                                request.setUserLoginName(user);
-                                request.setUserPassword(pwd);
-                                RegisterResponse response = HttpClient.httpPost(REGISTER_URL, request, RegisterRequest.class, RegisterResponse.class);
-                                Log.d("register", "run: " + response.getUserId());
-                            }
-                        }).start();
+//                        new Thread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                RegisterRequest request=  new RegisterRequest();
+//                                request.setUserLoginName(user);
+//                                request.setUserPassword(pwd);
+//                                RegisterResponse response = HttpClient.httpPost(REGISTER_URL, request, RegisterRequest.class, RegisterResponse.class);
+//                                Log.d("register", "run: " + response.getUserId());
+//                            }
+//                        }).start();
 
 
                         Toast.makeText(RegisterActivity.this, "You have registered", Toast.LENGTH_SHORT).show();
