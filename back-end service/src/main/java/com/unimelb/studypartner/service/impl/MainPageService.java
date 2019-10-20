@@ -1,27 +1,25 @@
 package com.unimelb.studypartner.service.impl;
 
-import com.unimelb.studypartner.common.PictureService;
+import com.alibaba.fastjson.JSONObject;
+import com.unimelb.studypartner.common.*;
 import com.unimelb.studypartner.dal.IActivityAndPostDAL;
-import com.unimelb.studypartner.common.CommonException;
 import com.unimelb.studypartner.dal.IUserSearchDAL;
 import com.unimelb.studypartner.dal.impl.UserSearchDAL;
-import com.unimelb.studypartner.dao.Activity;
-import com.unimelb.studypartner.dao.Post;
-import com.unimelb.studypartner.dao.PostPhoto;
-import com.unimelb.studypartner.dao.User;
+import com.unimelb.studypartner.dao.*;
 import com.unimelb.studypartner.service.IMainPageService;
-import com.unimelb.studypartner.service.bo.ActivityBO;
-import com.unimelb.studypartner.service.bo.AnswerBO;
-import com.unimelb.studypartner.service.bo.PostBO;
-import com.unimelb.studypartner.service.bo.UserBO;
+import com.unimelb.studypartner.service.IUserService;
+import com.unimelb.studypartner.service.bo.*;
 import org.apache.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by xiyang on 2019/10/3
@@ -38,6 +36,12 @@ public class MainPageService implements IMainPageService {
 
     @Autowired
     PictureService pictureService;
+
+    @Autowired
+    CommonService commonService;
+
+    @Autowired
+    IUserService userService;
 
     @Override
     public int joinActivity(int userId, int activityId, String type, int participantId) throws CommonException {
@@ -134,7 +138,10 @@ public class MainPageService implements IMainPageService {
                 activity.setActivityPhoto(url);
             }
 
-            return activityAndPostDAL.createActivity(activity, userList);
+            int id = activityAndPostDAL.createActivity(activity, userList);
+            String content = "Name : " +  activity.getActivityName() + "; Description :" + activity.getActivityDescription();
+            sendMQtt("ACTIVITY", id, content, activity.getTagId());
+            return id;
         } catch (Exception ex) {
             throw new CommonException(ex.getMessage(), -1);
         }
@@ -198,7 +205,10 @@ public class MainPageService implements IMainPageService {
                 }
             }
 
-            return activityAndPostDAL.createPost(post, photoAddress);
+            int id =  activityAndPostDAL.createPost(post, photoAddress);
+            String content = "Name : " +  post.getPostName() + "; Description :" + post.getPostDescription();
+            sendMQtt("POST", id, content, post.getTagId());
+            return id;
         } catch (Exception ex) {
             throw new CommonException(ex.getMessage(), -1);
         }
@@ -207,16 +217,16 @@ public class MainPageService implements IMainPageService {
     public PostBO getPost(int postId, int userId) throws CommonException {
         try {
             Post post = activityAndPostDAL.getPost(postId);
-            if(post.getTagId() == null){
+            if (post.getTagId() == null) {
                 post.setTagId(0);
             }
             PostBO postBO = new PostBO();
             BeanUtils.copyProperties(post, postBO);
 
             List<PostPhoto> photoList = activityAndPostDAL.getPostPhotoList(postId);
-            if(photoList != null && photoList.size() > 0){
+            if (photoList != null && photoList.size() > 0) {
                 List<String> picList = new ArrayList<>();
-                for(PostPhoto photo : photoList){
+                for (PostPhoto photo : photoList) {
                     picList.add(pictureService.getPic(photo.getPhoto()));
                 }
                 postBO.setPhotoList(picList);
@@ -226,7 +236,21 @@ public class MainPageService implements IMainPageService {
             postBO.setCreateUser(getUserBO(post.getUserId()));
 
             // get the answer
-            List<AnswerBO> answerBOList = new ArrayList<>();
+            List<AnswerBO> answerBOList = activityAndPostDAL.getAnswers(postId);
+            if (answerBOList != null && answerBOList.size() > 0) {
+                for (AnswerBO answerBO : answerBOList) {
+                    if (answerBO.getPicList() != null && answerBO.getPicList().size() > 0) {
+                        List<String> anwserPhotoList = new ArrayList<>();
+                        for (AnswerPhoto answerPhoto : answerBO.getPicList()) {
+                            anwserPhotoList.add(pictureService.getPic(answerPhoto.getPhoto()));
+                        }
+                        answerBO.setPhotoList(anwserPhotoList);
+                    }
+                    if(answerBO.getUser().getUserPhoto() != null && answerBO.getUser().getUserPhoto().length() > 0){
+                        answerBO.getUser().setUserPhoto(pictureService.getPic(answerBO.getUser().getUserPhoto()));
+                    }
+                }
+            }
             postBO.setAnswerBOList(answerBOList);
 
             return postBO;
@@ -235,15 +259,83 @@ public class MainPageService implements IMainPageService {
         }
     }
 
-    private UserBO getUserBO(int userId) throws Exception{
+    @Override
+    public List<Activity> getSearchActivity(SearchEntity searchEntity) throws CommonException {
+        try {
+            GeoEntity geoEntity = null;
+            if (searchEntity.getLatitude() != null && searchEntity.getLongitude() != null) {
+                geoEntity = commonService.calculateRoundGeoEntity(searchEntity.getLongitude(), searchEntity.getLatitude(), new BigDecimal(50000));
+            }
+            int offset = (searchEntity.getPageNumber() - 1) * searchEntity.getPageSize();
+            List<Activity> activities = activityAndPostDAL.getSearchActivity(searchEntity, geoEntity, offset, searchEntity.getPageSize());
+
+            // set rank for home page
+            setRank(searchEntity.getTagId(), searchEntity.getUserId());
+
+            return activities;
+        } catch (Exception ex) {
+            throw new CommonException(ex.getMessage(), -1);
+        }
+    }
+
+    public List<Post> getSearchPost(SearchEntity searchEntity) throws CommonException{
+        try {
+            GeoEntity geoEntity = null;
+            if (searchEntity.getLatitude() != null && searchEntity.getLongitude() != null) {
+                geoEntity = commonService.calculateRoundGeoEntity(searchEntity.getLongitude(), searchEntity.getLatitude(), new BigDecimal(50000));
+            }
+            int offset = (searchEntity.getPageNumber() - 1) * searchEntity.getPageSize();
+            List<Post> posts = activityAndPostDAL.getSearchPost(searchEntity, geoEntity, offset, searchEntity.getPageSize());
+
+            // set rank for home page
+            setRank(searchEntity.getTagId(), searchEntity.getUserId());
+
+            return posts;
+
+        }catch (Exception ex) {
+            throw new CommonException(ex.getMessage(), -1);
+        }
+    }
+
+    private UserBO getUserBO(int userId) throws Exception {
         User user = userSearchDAL.getUser(userId);
         UserBO userBO = new UserBO();
         userBO.setUserName(user.getUserLoginName());
         userBO.setUserId(user.getUserId());
-        if(user.getUserPhoto() != null && user.getUserPhoto().length() > 0){
+        if (user.getUserPhoto() != null && user.getUserPhoto().length() > 0) {
             userBO.setUserPhoto(pictureService.getPic(user.getUserPhoto()));
         }
 
         return userBO;
+    }
+
+    private void setRank(int tagId, int userId){
+        if(tagId != 0){
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        userService.rankSet(userId, tagId);
+                        ConcurrentHashMap<String,String> map = new ConcurrentHashMap<>();
+                        map.put("a","a");
+                    } catch (Exception e) {
+                        logger.error(e);
+                    }
+                }
+            }).start();
+        }
+    }
+
+    private void sendMQtt(String type, int id, String content, Integer tagId){
+        if(tagId != null && tagId != 0) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("type", type);
+            jsonObject.put("id", id);
+            jsonObject.put("content", content);
+
+            String json = jsonObject.toJSONString();
+            MqttPushClient client = MqttPushClient.getInstance();
+            client.publish("topicID" + tagId, json);
+        }
     }
 }

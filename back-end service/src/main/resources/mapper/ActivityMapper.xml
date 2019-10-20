@@ -72,4 +72,20 @@
       #{id}
     </foreach>
   </select>
+
+  <select id="searchActivity"  resultMap="BaseResultMap">
+    select activity_id, user_id, activity_name, activity_location, activity_description, activity_time,
+    activity_create_time, tag_id, activity_photo, latitude, longitude
+    from activity
+    <where>
+      <if test="longitudeRight != null">
+        and longitude &gt; #{longitudeRight} and  longitude &lt; #{longitudeLeft}
+        and latitude &lt; #{latitudeUp} and  latitude &gt; #{latitudeDown}
+      </if>
+      <if test="tagId != null">
+        and tag_id = #{tagId}
+      </if>
+    </where>
+    limit #{offset},#{pageSize}
+  </select>
 </mapper>

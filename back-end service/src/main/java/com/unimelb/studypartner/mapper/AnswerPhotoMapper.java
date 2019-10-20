@@ -16,4 +16,6 @@ public interface AnswerPhotoMapper {
     List<AnswerPhoto> selectAll();
 
     int updateByPrimaryKey(AnswerPhoto record);
+
+    List<AnswerPhoto> selectByCommentId(Integer commentId);
 }

@@ -63,10 +63,10 @@ public class UserService implements IUserService {
         }
     }
 
+    // not use any more
     @Override
     public List<MeetingBO> searchMeeting(final MeetingSearchBO meetingSearchBO) throws CommonException {
         try {
-            //TODO
             List<MeetingBO> meetingBOList = null;
 
             // update user search things
@@ -218,7 +218,8 @@ public class UserService implements IUserService {
         }
     }
 
-    private void rankSet(int userId, int tagId) throws Exception {
+    @Override
+    public void rankSet(int userId, int tagId) throws Exception {
         String redisKey = RANK_TITLE + userId;
         // get list from redis and transfer to object
         Object obj = redisUtil.get(redisKey);
@@ -266,7 +267,8 @@ public class UserService implements IUserService {
         }
     }
 
-    private List<UserTag> rankGet(int userId) throws Exception {
+    @Override
+    public List<UserTag> rankGet(int userId) throws Exception {
         String redisKey = RANK_TITLE + userId;
         // get list from redis and transfer to object
         Object obj = redisUtil.get(redisKey);

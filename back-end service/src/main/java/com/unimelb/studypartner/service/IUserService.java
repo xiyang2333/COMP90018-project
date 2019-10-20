@@ -3,6 +3,7 @@ package com.unimelb.studypartner.service;
 import com.unimelb.studypartner.common.CommonException;
 import com.unimelb.studypartner.dao.Tag;
 import com.unimelb.studypartner.dao.User;
+import com.unimelb.studypartner.dao.UserTag;
 import com.unimelb.studypartner.service.bo.MeetingBO;
 import com.unimelb.studypartner.service.bo.MeetingSearchBO;
 import com.unimelb.studypartner.service.bo.RegisterBO;
@@ -25,4 +26,8 @@ public interface IUserService {
     public RegisterBO register(User user, String userPic) throws CommonException;
 
     public void updateTag(int userId, List<Integer> tags) throws CommonException;
+
+    public void rankSet(int userId, int tagId) throws Exception ;
+
+    public List<UserTag> rankGet(int userId) throws Exception ;
 }

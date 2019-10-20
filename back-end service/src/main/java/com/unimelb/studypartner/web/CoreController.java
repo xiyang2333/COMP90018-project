@@ -199,7 +199,7 @@ public class CoreController {
                 partList.add(activityPart);
             }
             response.setResponseStatus(0);
-            response.setActivityPartList(partList);
+            response.setActivityList(partList);
         } catch (CommonException ex) {
             logger.error(ex.getWarnMessage());
 
@@ -329,11 +329,76 @@ public class CoreController {
                         BeanUtils.copyProperties(answerBO.getUser(), userPart);
                         answerPart.setUser(userPart);
                     }
+                    answerParts.add(answerPart);
                 }
 
                 response.setAnswerList(answerParts);
             }
         } catch (CommonException ex){
+            logger.error(ex.getWarnMessage());
+
+            response.setResponseStatus(ex.getReturnStatus());
+            response.setErrorMessage(ex.getWarnMessage());
+        }
+        return response;
+    }
+
+    @RequestMapping(value = "/searchactivity", method = RequestMethod.POST)
+    SearchActivityResponse searchActivity(@RequestBody SearchActivityRequest request){
+        SearchActivityResponse response = new SearchActivityResponse();
+        try {
+            SearchEntity searchEntity = new SearchEntity();
+            BeanUtils.copyProperties(request, searchEntity);
+            if(searchEntity.getPageSize() == 0){
+                searchEntity.setPageSize(10);
+            }
+            if(searchEntity.getPageNumber() == 0){
+                searchEntity.setPageNumber(1);
+            }
+            List<Activity> activityBOList = mainPageService.getSearchActivity(searchEntity);
+
+            List<ActivityPart> partList = new ArrayList<>();
+            if(activityBOList != null && activityBOList.size() != 0) {
+                for (Activity activity : activityBOList) {
+                    ActivityPart activityPart = new ActivityPart();
+                    BeanUtils.copyProperties(activity, activityPart);
+                    partList.add(activityPart);
+                }
+                response.setResponseStatus(0);
+                response.setActivityList(partList);
+            }
+        }catch (CommonException ex){
+            logger.error(ex.getWarnMessage());
+
+            response.setResponseStatus(ex.getReturnStatus());
+            response.setErrorMessage(ex.getWarnMessage());
+        }
+        return response;
+    }
+
+    @RequestMapping(value = "/searchpost", method = RequestMethod.POST)
+    SearchPostResponse searchPostResponse(@RequestBody SearchPostRequest request){
+        SearchPostResponse response = new SearchPostResponse();
+        try{
+            SearchEntity searchEntity = new SearchEntity();
+            BeanUtils.copyProperties(request, searchEntity);
+            if(searchEntity.getPageSize() == 0){
+                searchEntity.setPageSize(10);
+            }
+            if(searchEntity.getPageNumber() == 0){
+                searchEntity.setPageNumber(1);
+            }
+            List<Post> posts = mainPageService.getSearchPost(searchEntity);
+
+            List<PostPart> partList = new ArrayList<>();
+            for(Post post: posts){
+                PostPart postPart = new PostPart();
+                BeanUtils.copyProperties(post, postPart);
+                partList.add(postPart);
+            }
+            response.setPostList(partList);
+            response.setResponseStatus(0);
+        }catch (CommonException ex){
             logger.error(ex.getWarnMessage());
 
             response.setResponseStatus(ex.getReturnStatus());
