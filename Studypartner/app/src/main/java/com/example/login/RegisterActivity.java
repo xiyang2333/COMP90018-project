@@ -68,7 +68,7 @@ public class RegisterActivity extends AppCompatActivity {
 
 
                         Toast.makeText(RegisterActivity.this, "You have registered", Toast.LENGTH_SHORT).show();
-                        Intent moveToTag = new Intent(RegisterActivity.this,ShowTag.class);
+                        Intent moveToTag = new Intent(RegisterActivity.this,clicktag.class);
                         startActivity(moveToTag);
                     }
                     else{

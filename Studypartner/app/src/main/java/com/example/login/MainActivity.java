@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     TextView mTextViewRegister;
     DatabaseHelper db;
     GoogleSignInClient mGoogleSignInClient;
+
     int RC_SIGN_IN=0;
 
 
@@ -51,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         mTextUsername=(EditText)findViewById(R.id.edittext_username);
+
         mTextPassword=(EditText)findViewById(R.id.edittext_password);
         mButtonLogin=(Button)findViewById(R.id.button_login);
         mTextViewRegister=(TextView) findViewById(R.id.textview_register);
@@ -61,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(registerIntent);
             }
         });
+
+
 
         mButtonLogin.setOnClickListener(new View.OnClickListener() {
             @Override

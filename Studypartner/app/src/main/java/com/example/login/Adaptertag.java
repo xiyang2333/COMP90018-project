@@ -13,30 +13,27 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Adaptertag extends RecyclerView.Adapter<Adaptertag.viewHolder> {
+public class Adaptertag extends RecyclerView.Adapter<Adaptertag.ViewHolder> {
+
     private ArrayList<Tagitem> mtaglist;
+
     private static List<String> mlist =new ArrayList<String>();
     public List<String> getList(){
         return mlist;
     }
-    public static class viewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        public TextView mTextView1;
+    public static class ViewHolder extends RecyclerView.ViewHolder{
+
+        View mTextView1;
+        TextView tagName ;
 
 
 
-        public viewHolder(@NonNull View itemView) {
+
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            itemView.setOnClickListener(this);
-            mTextView1 = itemView.findViewById(R.id.textView);
+            mTextView1 = itemView;
+            tagName = itemView.findViewById(R.id.textView);
 
-        }
-        public void onClick(View view){
-            if (mlist.size()<4){
-                mlist.add(view.getContext().toString().trim());
-            }
-            else{
-                // seems like toast function can't be used in static class
-            }
         }
 
     }
@@ -44,21 +41,52 @@ public class Adaptertag extends RecyclerView.Adapter<Adaptertag.viewHolder> {
     public Adaptertag(ArrayList<Tagitem> taglist){
         mtaglist=taglist;
     }
-    @NonNull
+
     @Override
-    public viewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.tagname,parent,false);
-        viewHolder vh = new viewHolder(v);
-        return vh;
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.tagname,parent,false);
+
+        final ViewHolder holder = new ViewHolder(view);
+
+        holder.mTextView1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int position = holder.getAdapterPosition();
+                Tagitem tag = mtaglist.get(position);
+                Toast.makeText(view.getContext(),"you clicked" + tag.getText1(),Toast.LENGTH_SHORT).show();
+                if (mlist.size()<4){
+                    mlist.add(view.getContext().toString().trim());
+                }
+                else{
+                    Toast.makeText(view.getContext(), "maximum num of tag 4 reached!!", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+        holder.tagName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int position = holder.getAdapterPosition();
+                Tagitem tag = mtaglist.get(position);
+                Toast.makeText(view.getContext(),"you clicked " + tag.getText1(),Toast.LENGTH_SHORT).show();
+                if (mlist.size()<4){
+                    mlist.add(view.getContext().toString().trim());
+                }
+                else{
+                    Toast.makeText(view.getContext(), "maximum num of tag 4 reached!!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        return holder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull viewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Tagitem currentItem= mtaglist.get(position);
-        holder.mTextView1.setText(currentItem.getText1());
-
-
+        holder.tagName.setText(currentItem.getText1());
     }
+
+
 
     @Override
     public int getItemCount() {
