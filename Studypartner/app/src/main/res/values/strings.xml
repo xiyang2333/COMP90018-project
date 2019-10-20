@@ -31,4 +31,16 @@
     <string name="menu_send">Send</string>
     <string name="me_fragment">Me fragment</string>
     <string name="Enter">Enter</string>
+
+    <string name="groupname">Group Name</string>
+
+    <string name="Chemistry">Chemistry</string>
+    <string name="IT">Information Technology</string>
+    <string name="Business">Business</string>
+    <string name="Math">Math</string>
+    <string name="Physics">Physics</string>
+    <string name="Biology">Biology</string>
+    <string name="Mechanics">Mechanics</string>
+    <string name="Art">Art</string>
+
 </resources>
