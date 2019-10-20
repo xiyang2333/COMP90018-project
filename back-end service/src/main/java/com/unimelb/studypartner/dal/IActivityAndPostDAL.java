@@ -1,9 +1,12 @@
 package com.unimelb.studypartner.dal;
 
+import com.unimelb.studypartner.common.GeoEntity;
 import com.unimelb.studypartner.dao.Activity;
 import com.unimelb.studypartner.dao.Post;
 import com.unimelb.studypartner.dao.PostPhoto;
 import com.unimelb.studypartner.dao.User;
+import com.unimelb.studypartner.service.bo.AnswerBO;
+import com.unimelb.studypartner.service.bo.SearchEntity;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -36,4 +39,9 @@ public interface IActivityAndPostDAL {
 
     public List<PostPhoto> getPostPhotoList(int postId) throws SQLException;
 
+    public List<AnswerBO> getAnswers (int postId) throws SQLException;
+
+    public List<Activity> getSearchActivity(SearchEntity searchEntity, GeoEntity geoEntity, int offset, int pageSize) throws SQLException;
+
+    public List<Post> getSearchPost(SearchEntity searchEntity, GeoEntity geoEntity, int offset, int pageSize) throws SQLException;
 }

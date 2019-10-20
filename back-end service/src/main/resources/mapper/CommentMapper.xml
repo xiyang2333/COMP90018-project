@@ -35,4 +35,10 @@
     select comment_id, post_id, user_id, comment_description, comment_status
     from comment
   </select>
+
+  <select id="selectByPostId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select comment_id, post_id, user_id, comment_description, comment_status
+    from comment
+    where post_id = #{postId,jdbcType=INTEGER}
+  </select>
 </mapper>

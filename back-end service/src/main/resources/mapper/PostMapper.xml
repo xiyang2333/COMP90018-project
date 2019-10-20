@@ -52,8 +52,24 @@
 
   <select id="selctByUserId" resultMap="BaseResultMap">
     select post_id, post_name, post_description, post_price, post_datetime, user_id,
-    latitude, longitude
+    latitude, longitude, tag_id
     from post
     where user_id = #{userId} limit #{offset},#{pageSize}
+  </select>
+
+  <select id="searchPost" resultMap="BaseResultMap">
+    select post_id, post_name, post_description, post_price, post_datetime, user_id,
+    latitude, longitude, tag_id
+    from post
+    <where>
+      <if test="longitudeRight != null">
+        and longitude &gt; #{longitudeRight} and  longitude &lt; #{longitudeLeft}
+        and latitude &lt; #{latitudeUp} and  latitude &gt; #{latitudeDown}
+      </if>
+      <if test="tagId != null">
+        and tag_id = #{tagId}
+      </if>
+    </where>
+    limit #{offset},#{pageSize}
   </select>
 </mapper>

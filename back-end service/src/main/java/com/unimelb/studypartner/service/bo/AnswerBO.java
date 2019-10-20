@@ -1,5 +1,7 @@
 package com.unimelb.studypartner.service.bo;
 
+import com.unimelb.studypartner.dao.AnswerPhoto;
+
 import java.util.List;
 
 /**
@@ -11,6 +13,7 @@ public class AnswerBO {
     private UserBO user;
     private String answer;
     private List<String> photoList;
+    private List<AnswerPhoto> picList;
 
     public Integer getCommentId() {
         return commentId;
@@ -50,5 +53,13 @@ public class AnswerBO {
 
     public void setPhotoList(List<String> photoList) {
         this.photoList = photoList;
+    }
+
+    public List<AnswerPhoto> getPicList() {
+        return picList;
+    }
+
+    public void setPicList(List<AnswerPhoto> picList) {
+        this.picList = picList;
     }
 }

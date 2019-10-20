@@ -5,6 +5,7 @@ import com.unimelb.studypartner.dao.Activity;
 import com.unimelb.studypartner.dao.Post;
 import com.unimelb.studypartner.service.bo.ActivityBO;
 import com.unimelb.studypartner.service.bo.PostBO;
+import com.unimelb.studypartner.service.bo.SearchEntity;
 
 import java.util.List;
 
@@ -29,4 +30,8 @@ public interface IMainPageService {
     public int CreatePost(PostBO postBO, List<String> photoList) throws CommonException;
 
     public PostBO getPost(int postId, int userId) throws CommonException;
+
+    public List<Activity> getSearchActivity(SearchEntity searchEntity) throws CommonException;
+
+    public List<Post> getSearchPost(SearchEntity searchEntity) throws CommonException;
 }

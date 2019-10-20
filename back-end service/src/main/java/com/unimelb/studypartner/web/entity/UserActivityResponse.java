@@ -9,7 +9,7 @@ public class UserActivityResponse {
     private int responseStatus;
     private String errorMessage;
 
-    private List<ActivityPart> activityPartList;
+    private List<ActivityPart> activityList;
 
     public int getResponseStatus() {
         return responseStatus;
@@ -27,11 +27,11 @@ public class UserActivityResponse {
         this.errorMessage = errorMessage;
     }
 
-    public List<ActivityPart> getActivityPartList() {
-        return activityPartList;
+    public List<ActivityPart> getActivityList() {
+        return activityList;
     }
 
-    public void setActivityPartList(List<ActivityPart> activityPartList) {
-        this.activityPartList = activityPartList;
+    public void setActivityList(List<ActivityPart> activityList) {
+        this.activityList = activityList;
     }
 }
