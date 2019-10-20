@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:title="Colour">
+        <menu>
+            <item
+                android:title="Red"
+                android:id="@+id/red">
+            </item>
+            <item
+                android:id="@+id/green"
+                android:title="Green">
+            </item>
+            <item
+                android:id="@+id/yellow"
+                android:title="Yellow">
+            </item>
+            <item
+                android:id="@+id/black"
+                android:title="Black">
+            </item>
+        </menu>
+    </item>
+
+    <item
+        android:title="Width">
+        <menu>
+
+            <item
+                android:id="@+id/size5"
+                android:title="5">
+            </item>
+            <item
+                android:id="@+id/size10"
+                android:title="10">
+            </item>
+            <item
+                android:id="@+id/size20"
+                android:title="20">
+            </item>
+        </menu>
+</item>
+
+    <item
+        android:title="Written Form">
+        <menu>
+
+            <item
+                android:id="@+id/smooth_line"
+                android:title="Smooth line">
+            </item>
+            <item
+                android:id="@+id/line1"
+                android:title="Straight line">
+            </item>
+            <item
+                android:id="@+id/rect"
+                android:title="Rectangle">
+            </item>
+            <item
+                android:id="@+id/circle"
+                android:title="Circle">
+            </item>
+        </menu>
+    </item>
+
+    <item
+        android:title="Line Form">
+        <menu>
+            <item
+                android:id="@+id/real_line"
+                android:title="Solid line">
+            </item>
+            <item
+                android:id="@+id/dotted_line"
+                android:title="Dotted line">
+            </item>
+        </menu>
+    </item>
+
+    <item
+        android:title="Eraser">
+        <menu>
+            <item
+                android:id="@+id/clear"
+                android:title="Stroke rub">
+            </item>
+            <item
+                android:id="@+id/clearall"
+                android:title="Clear all">
+            </item>
+        </menu>
+    </item>
+
+    <item
+        android:id="@+id/save"
+        android:title="Save">
+    </item>
+</menu>

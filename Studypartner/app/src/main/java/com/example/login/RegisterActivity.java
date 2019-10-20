@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -35,6 +36,7 @@ public class RegisterActivity extends AppCompatActivity {
         mTextCnfPassword=(EditText)findViewById(R.id.edittext_cnf_password);
         mButtonRegister=(Button)findViewById(R.id.button_register);
         mTextViewLogin=(TextView) findViewById(R.id.textview_login);
+
         mTextViewLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -54,7 +56,6 @@ public class RegisterActivity extends AppCompatActivity {
                     if(val>0){
 
 
-
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
@@ -63,13 +64,19 @@ public class RegisterActivity extends AppCompatActivity {
                                 request.setUserPassword(pwd);
                                 RegisterResponse response = HttpClient.httpPost(REGISTER_URL, request, RegisterRequest.class, RegisterResponse.class);
                                 Log.d("register", "run: " + response.getUserId());
+                                Looper.prepare();
+                                Toast.makeText(RegisterActivity.this, "You have registered", Toast.LENGTH_SHORT).show();
+
+                                Intent moveToTag = new Intent(RegisterActivity.this,clicktag.class);
+                                moveToTag.putExtra("user",response.getUserId());
+                                startActivity(moveToTag);
+                                Looper.loop();
+
                             }
                         }).start();
 
 
-                        Toast.makeText(RegisterActivity.this, "You have registered", Toast.LENGTH_SHORT).show();
-                        Intent moveToTag = new Intent(RegisterActivity.this,clicktag.class);
-                        startActivity(moveToTag);
+
                     }
                     else{
                         Toast.makeText(RegisterActivity.this, "Registration Error", Toast.LENGTH_SHORT).show();
