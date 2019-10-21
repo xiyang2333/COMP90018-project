@@ -55,14 +55,13 @@ public class RegisterActivity extends AppCompatActivity {
                     long val = db.addUser(user,pwd);
                     if(val>0){
 
-
-<<<<<<< HEAD
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
                                 RegisterRequest request=  new RegisterRequest();
                                 request.setUserLoginName(user);
                                 request.setUserPassword(pwd);
+
                                 RegisterResponse response = HttpClient.httpPost(REGISTER_URL, request, RegisterRequest.class, RegisterResponse.class);
                                 Log.d("register", "run: " + response.getUserId());
                                 Looper.prepare();
@@ -75,19 +74,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                             }
                         }).start();
-=======
 
-//                        new Thread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                RegisterRequest request=  new RegisterRequest();
-//                                request.setUserLoginName(user);
-//                                request.setUserPassword(pwd);
-//                                RegisterResponse response = HttpClient.httpPost(REGISTER_URL, request, RegisterRequest.class, RegisterResponse.class);
-//                                Log.d("register", "run: " + response.getUserId());
-//                            }
-//                        }).start();
->>>>>>> 89351f93207210ac3988570eb279654c182fb737
 
 
 

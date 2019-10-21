@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     TextView mTextViewRegister;
     DatabaseHelper db;
     GoogleSignInClient mGoogleSignInClient;
+    Button test;
 
     int RC_SIGN_IN=0;
 
@@ -60,6 +61,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent registerIntent=new Intent(MainActivity.this,RegisterActivity.class);
+                startActivity(registerIntent);
+            }
+        });
+
+
+        test = findViewById(R.id.test);
+        test.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("??????????????????????");
+                Intent registerIntent=new Intent(MainActivity.this,painting.class);
                 startActivity(registerIntent);
             }
         });

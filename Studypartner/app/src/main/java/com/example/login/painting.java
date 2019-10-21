@@ -1,7 +1,8 @@
 package com.example.login;
 
-
+import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -17,6 +18,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -24,14 +26,12 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.service.entity.RegisterRequest;
-
 import java.io.ByteArrayOutputStream;
 
 public class painting extends AppCompatActivity {
 
     ImageView iv;
-    Button b1, b2, b3;
+
     float startx, starty, newx, newy, tempx, tempy;
     Paint paint;
     Canvas canvas;
@@ -41,11 +41,12 @@ public class painting extends AppCompatActivity {
     public int m;
     public android.graphics.PathEffect n;
     int number = 1;
+    Button save;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.painting);
 
         //-------------------------------------------------------------------
         WindowManager wm1 = this.getWindowManager();
@@ -67,17 +68,37 @@ public class painting extends AppCompatActivity {
         //在纸上作画
         canvas.drawBitmap(bitmap1, new Matrix(), paint);
         canvas.drawColor(Color.WHITE);
+
         iv = (ImageView) findViewById(R.id.iv);
+
         iv.setImageBitmap(bitmap1);
-        b1 = (Button) findViewById(R.id.btn1);
-        b2 = (Button) findViewById(R.id.btn2);
-        b3 = (Button) findViewById(R.id.btn3);
-        b1.setText("Width");
-        b2.setText("Colour");
-        b3.setText("Written Form");
+
+
+        init_view_id();
+
         //-------------------------------------------------------------------
         paintLine();
 
+    }
+
+    void init_view_id(){
+
+        save = findViewById(R.id.save);
+        Intent intent = getIntent();
+
+        save.setOnClickListener(new View.OnClickListener(){
+
+
+            @Override
+            public void onClick(View v) {
+
+                String map= save(iv);
+
+                painting.this.setResult(1);
+                painting.this.finish();
+
+            }
+        });
     }
 
     //线型改为虚线
@@ -91,6 +112,7 @@ public class painting extends AppCompatActivity {
     }
 
     //绘制平滑线
+    @SuppressLint("ClickableViewAccessibility")
     public void paintLine() {
         //给控件设置手势适配器，可以得到用户在这个控件上所做的手势；
         iv.setOnTouchListener(new View.OnTouchListener() { //当用户的手在这个控件时，自动回调
@@ -104,7 +126,7 @@ public class painting extends AppCompatActivity {
                         //获取用户手指按下时的坐标
                         startx = motionEvent.getX();
                         starty = motionEvent.getY();
-                        //Toast.makeText(MainActivity.this,startx+""+starty,Toast.LENGTH_SHORT).show();
+                        //Toast.makeText( painting.this,startx+""+starty,Toast.LENGTH_SHORT).show();
                         break;
                     case MotionEvent.ACTION_MOVE://手指滑动时调用
                         Log.d("print:", "正在滑动");
@@ -126,6 +148,7 @@ public class painting extends AppCompatActivity {
     }
 
     //绘制直线
+    @SuppressLint("ClickableViewAccessibility")
     public void paintLine1() {
         iv.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -150,6 +173,7 @@ public class painting extends AppCompatActivity {
     }
 
     //绘制矩形
+    @SuppressLint("ClickableViewAccessibility")
     public void paintrect() {
         iv.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -227,7 +251,7 @@ public class painting extends AppCompatActivity {
 
     //-----NumberPicker数字选择器---------------------------------------------------------
     public void numberpick() {
-        final Dialog d = new Dialog(painting.this);
+        final Dialog d = new Dialog( painting.this);
         d.setContentView(R.layout.paint_size_select);
         Button bb1 = (Button) d.findViewById(R.id.button1);
         Button bb2 = (Button) d.findViewById(R.id.button2);
@@ -238,17 +262,17 @@ public class painting extends AppCompatActivity {
         np.setWrapSelectorWheel(false);
         np.setNumberPickerDividerColor(np);
 
-        bb1.setOnClickListener(new View.OnClickListener() {
+        bb1.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 number = np.getValue();
                 paint.setStrokeWidth(number);
-                b1.setText("Width：" + number);
-                Toast.makeText(painting.this, "The width of painting brush is：" + number, Toast.LENGTH_SHORT).show();
+
+                Toast.makeText( painting.this, "The width of painting brush is：" + number, Toast.LENGTH_SHORT).show();
                 d.dismiss();
             }
         });
-        bb2.setOnClickListener(new View.OnClickListener() {
+        bb2.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 d.dismiss(); // dismiss the dialog
@@ -273,45 +297,45 @@ public class painting extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.green:
                 green(iv);
-                Toast.makeText(painting.this, "The colour has changed into green", Toast.LENGTH_SHORT).show();
-                b2.setText("Colour：Green");
+                Toast.makeText( painting.this, "The colour has changed into green", Toast.LENGTH_SHORT).show();
+
                 break;
             case R.id.red:
                 red(iv);
-                Toast.makeText(painting.this, "The colour has changed into red", Toast.LENGTH_SHORT).show();
-                b2.setText("Colour：Red");
+                Toast.makeText( painting.this, "The colour has changed into red", Toast.LENGTH_SHORT).show();
+
                 break;
             case R.id.yellow:
                 yellow(iv);
-                Toast.makeText(painting.this, "The colour has changed into yellow", Toast.LENGTH_SHORT).show();
-                b2.setText("Colour: Yellow");
+                Toast.makeText( painting.this, "The colour has changed into yellow", Toast.LENGTH_SHORT).show();
+
                 break;
             case R.id.black:
                 black(iv);
-                Toast.makeText(painting.this, "The colour has changed into black", Toast.LENGTH_SHORT).show();
-                b2.setText("Colour：Black");
+                Toast.makeText( painting.this, "The colour has changed into black", Toast.LENGTH_SHORT).show();
+
                 break;
 
             case R.id.size5:
                 brush5(iv);
-                Toast.makeText(painting.this, "The width has changed into 5", Toast.LENGTH_SHORT).show();
-                b1.setText("Width：5");
+                Toast.makeText( painting.this, "The width has changed into 5", Toast.LENGTH_SHORT).show();
+
                 break;
             case R.id.size10:
                 brush10(iv);
-                Toast.makeText(painting.this, "The width has changed into 10", Toast.LENGTH_SHORT).show();
-                b1.setText("Width：10");
+                Toast.makeText( painting.this, "The width has changed into 10", Toast.LENGTH_SHORT).show();
+
                 break;
             case R.id.size20:
                 brush20(iv);
-                Toast.makeText(painting.this, "The width has changed into 20", Toast.LENGTH_SHORT).show();
-                b1.setText("Width：20");
+                Toast.makeText( painting.this, "The width has changed into 20", Toast.LENGTH_SHORT).show();
+
                 break;
             case R.id.clear:
                 clear(iv);
                 paintLine();
-                Toast.makeText(painting.this, "Change into the eraser", Toast.LENGTH_SHORT).show();
-                b3.setText("Eraser");
+                Toast.makeText( painting.this, "Change into the eraser", Toast.LENGTH_SHORT).show();
+
                 break;
             case R.id.clearall:
                 clearall(iv);
@@ -319,36 +343,34 @@ public class painting extends AppCompatActivity {
             case R.id.rect:
                 recover();
                 paintrect();
-                b3.setText("Rectangle");
+
                 break;
             case R.id.real_line:
                 recover();
                 paintrealLine();
-                Toast.makeText(painting.this, "Solid line", Toast.LENGTH_SHORT).show();
+                Toast.makeText( painting.this, "Solid line", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.dotted_line:
                 recover();
                 paintdottedLine();
-                Toast.makeText(painting.this, "Dotted line", Toast.LENGTH_SHORT).show();
+                Toast.makeText( painting.this, "Dotted line", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.smooth_line:
                 recover();
                 paintLine();
-                b3.setText("Smooth");
+
                 break;
             case R.id.line1:
                 recover();
                 paintLine1();
-                b3.setText("Straight");
+
                 break;
             case R.id.circle:
                 recover();
                 paintcircle();
-                b3.setText("Circle");
+
                 break;
-            case R.id.save:
-                save(iv);
-                break;
+
         }
         return true;
     }
@@ -411,7 +433,7 @@ public class painting extends AppCompatActivity {
         paint.setStrokeWidth(5);
     }
 
-    //点击保存并存储到SD卡中
+    //点击保存
     public String save(View view) {
 
         if (bitmap1 != null) {

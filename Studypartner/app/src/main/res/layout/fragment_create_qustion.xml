@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+
+
+    <EditText
+        android:id="@+id/edit_QA"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:text="Describe your question here"
+        android:textSize="30sp"
+        />
+
+    <TextView
+        android:id="@+id/choosetag"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_below="@id/edit_QA"
+
+        android:text="Tag"/>
+
+
+    <Spinner
+        android:id="@+id/spinner1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+       android:layout_toRightOf="@+id/choosetag"
+        android:layout_below="@+id/edit_QA"
+         />
+
+    <Button
+        android:id="@+id/painting"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/spinner1"
+        android:layout_marginTop="50dp"
+        android:text="painting my question" />
+
+
+    <Button
+        android:id="@+id/create_success"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/painting"
+        android:layout_marginTop="10dp"
+        android:text="create" />
+
+</RelativeLayout>

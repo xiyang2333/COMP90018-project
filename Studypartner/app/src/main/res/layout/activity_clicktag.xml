@@ -4,8 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="15dp">
-
-
     <TextView
         android:id="@+id/tag_title"
         android:layout_width="wrap_content"
@@ -14,94 +12,87 @@
         android:text="Choose your tag"
         android:textSize="35sp" />
 
-    <LinearLayout
-        android:id="@+id/lLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-    </LinearLayout >
+     <CheckBox
+     android:id="@+id/checkbox_1"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:text="@string/Chemistry"
+     android:textSize="20sp"
+     android:layout_below="@+id/tag_title"
+     android:layout_marginTop="5dp"
+     />
+ <CheckBox
+     android:id="@+id/checkbox_2"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:text="@string/IT"
+     android:textSize="20sp"
+     android:layout_below="@+id/checkbox_1"
+     android:layout_marginTop="5dp"
+     />
+ <CheckBox
+     android:id="@+id/checkbox_3"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:text="@string/Business"
+     android:textSize="20sp"
+     android:layout_below="@+id/checkbox_2"
+     android:layout_marginTop="5dp"
+     />
+ <CheckBox
+     android:id="@+id/checkbox_4"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:text="@string/Math"
+     android:textSize="20sp"
+     android:layout_below="@+id/checkbox_3"
+     android:layout_marginTop="5dp"
+     />
+ <CheckBox
+     android:id="@+id/checkbox_5"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:text="@string/Physics"
+     android:textSize="20sp"
+     android:layout_below="@+id/checkbox_4"
+     android:layout_marginTop="5dp"
+     />
+ <CheckBox
+     android:id="@+id/checkbox_6"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:text="@string/Biology"
+     android:textSize="20sp"
+     android:layout_below="@+id/checkbox_5"
+     android:layout_marginTop="5dp"
+     />
+ <CheckBox
+     android:id="@+id/checkbox_7"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:text="@string/Mechanics"
+     android:textSize="20sp"
+     android:layout_below="@+id/checkbox_6"
+     android:layout_marginTop="5dp"
+     />
+ <CheckBox
+     android:id="@+id/checkbox_8"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:text="@string/Art"
+     android:textSize="20sp"
+     android:layout_below="@+id/checkbox_7"
+     android:layout_marginTop="5dp"
+     />
 
     <Button
         android:id="@+id/tag_enter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="35dp"
-        android:layout_below="@+id/lLayout"
+        android:layout_below="@+id/checkbox_8"
         android:text="@string/Enter"
         android:textSize="20dp" />
-    <!--        <CheckBox-->
-    <!--        android:id="@+id/checkbox_1"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:text="@string/Chemistry"-->
-    <!--        android:textSize="20sp"-->
-    <!--        android:layout_below="@+id/tag_title"-->
-    <!--        android:layout_marginTop="5dp"-->
-    <!--        />-->
-    <!--    <CheckBox-->
-    <!--        android:id="@+id/checkbox_2"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:text="@string/IT"-->
-    <!--        android:textSize="20sp"-->
-    <!--        android:layout_below="@+id/checkbox_1"-->
-    <!--        android:layout_marginTop="5dp"-->
-    <!--        />-->
-    <!--    <CheckBox-->
-    <!--        android:id="@+id/checkbox_3"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:text="@string/Business"-->
-    <!--        android:textSize="20sp"-->
-    <!--        android:layout_below="@+id/checkbox_2"-->
-    <!--        android:layout_marginTop="5dp"-->
-    <!--        />-->
-    <!--    <CheckBox-->
-    <!--        android:id="@+id/checkbox_4"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:text="@string/Math"-->
-    <!--        android:textSize="20sp"-->
-    <!--        android:layout_below="@+id/checkbox_3"-->
-    <!--        android:layout_marginTop="5dp"-->
-    <!--        />-->
-    <!--    <CheckBox-->
-    <!--        android:id="@+id/checkbox_5"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:text="@string/Physics"-->
-    <!--        android:textSize="20sp"-->
-    <!--        android:layout_below="@+id/checkbox_4"-->
-    <!--        android:layout_marginTop="5dp"-->
-    <!--        />-->
-    <!--    <CheckBox-->
-    <!--        android:id="@+id/checkbox_6"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:text="@string/Biology"-->
-    <!--        android:textSize="20sp"-->
-    <!--        android:layout_below="@+id/checkbox_5"-->
-    <!--        android:layout_marginTop="5dp"-->
-    <!--        />-->
-    <!--    <CheckBox-->
-    <!--        android:id="@+id/checkbox_7"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:text="@string/Mechanics"-->
-    <!--        android:textSize="20sp"-->
-    <!--        android:layout_below="@+id/checkbox_6"-->
-    <!--        android:layout_marginTop="5dp"-->
-    <!--        />-->
-    <!--    <CheckBox-->
-    <!--        android:id="@+id/checkbox_8"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:text="@string/Art"-->
-    <!--        android:textSize="20sp"-->
-    <!--        android:layout_below="@+id/checkbox_7"-->
-    <!--        android:layout_marginTop="5dp"-->
-    <!--        />-->
 
 
 

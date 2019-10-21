@@ -94,8 +94,5 @@
         </menu>
     </item>
 
-    <item
-        android:id="@+id/save"
-        android:title="Save">
-    </item>
+
 </menu>

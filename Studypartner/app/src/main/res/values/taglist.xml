@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="spinner_array">
+        <item>Chemistry</item>
+        <item>Information Technology</item>
+        <item>Business</item>
+        <item>Math</item>
+        <item>Physics</item>
+        <item>Biology</item>
+        <item>Mechanics</item>
+        <item>Art</item>
+    </string-array>
+</resources>
