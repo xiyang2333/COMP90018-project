@@ -100,14 +100,14 @@ public class clicktag extends AppCompatActivity {
 
                         UpdateTagResponse response = HttpClient.httpPost(UPDATE_TAG_URL, request, UpdateTagRequest.class, UpdateTagResponse.class);
 
-
+                        Intent movetoHome = new Intent (clicktag.this, HomeActivity.class);
+                        movetoHome.putExtra("user",userId);
+                        startActivity(movetoHome);
 
 
                     }
                 }).start();
-                Intent movetoHome = new Intent (clicktag.this, HomeActivity.class);
-                movetoHome.putExtra("user",userId);
-                startActivity(movetoHome);
+
             }
 
         });
