@@ -44,4 +44,8 @@ public interface IActivityAndPostDAL {
     public List<Activity> getSearchActivity(SearchEntity searchEntity, GeoEntity geoEntity, int offset, int pageSize) throws SQLException;
 
     public List<Post> getSearchPost(SearchEntity searchEntity, GeoEntity geoEntity, int offset, int pageSize) throws SQLException;
+
+    public List<Post> getPostByTagList(List<Integer> tagList) throws SQLException ;
+
+    public List<Activity> getActivityByTagList(List<Integer> tagList) throws SQLException ;
 }

@@ -16,6 +16,7 @@ public class GetPostResponse {
     private List<String> photoList;
     private BigDecimal latitude;
     private BigDecimal longitude;
+    private UserPart createUser;
     private List<AnswerPart> answerList;
 
     public int getResponseStatus() {
@@ -80,6 +81,14 @@ public class GetPostResponse {
 
     public void setLongitude(BigDecimal longitude) {
         this.longitude = longitude;
+    }
+
+    public UserPart getCreateUser() {
+        return createUser;
+    }
+
+    public void setCreateUser(UserPart createUser) {
+        this.createUser = createUser;
     }
 
     public List<AnswerPart> getAnswerList() {

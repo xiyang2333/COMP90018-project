@@ -13,6 +13,7 @@ import com.unimelb.studypartner.service.IUserService;
 import com.unimelb.studypartner.service.bo.MeetingBO;
 import com.unimelb.studypartner.service.bo.MeetingSearchBO;
 import com.unimelb.studypartner.service.bo.RegisterBO;
+import com.unimelb.studypartner.web.entity.UserPart;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -305,5 +306,21 @@ public class UserService implements IUserService {
         });
 
         return userTags;
+    }
+
+    public UserPart getUser(int userId) throws CommonException{
+        try{
+            User user = userSearchDAL.getUser(userId);
+            UserPart userPart = new UserPart();
+            userPart.setUserId(userId);
+            userPart.setUserName(user.getUserLoginName());
+            if(userPart.getUserPhoto() != null && userPart.getUserPhoto().length() > 0) {
+                userPart.setUserPhoto(pictureService.getPic(userPart.getUserPhoto()));
+            }
+
+            return userPart;
+        }catch (Exception ex) {
+            throw new CommonException(ex.getMessage(), -1);
+        }
     }
 }

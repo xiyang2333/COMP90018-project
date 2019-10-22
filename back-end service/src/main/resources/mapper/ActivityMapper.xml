@@ -88,4 +88,19 @@
     </where>
     limit #{offset},#{pageSize}
   </select>
+
+  <select id="searchByids"  resultMap="BaseResultMap">
+    select activity_id, user_id, activity_name, activity_location, activity_description, activity_time,
+    activity_create_time, tag_id, activity_photo, latitude, longitude
+    from activity
+    <where>
+      <if test="array.length > 0">
+        tag_id IN
+        <foreach collection="array" item="id" index="index" open="(" close=")" separator=",">
+          #{id}
+        </foreach>
+      </if>
+    </where>
+    limit 0,5
+  </select>
 </mapper>

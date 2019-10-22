@@ -4,6 +4,7 @@ import com.unimelb.studypartner.common.CommonException;
 import com.unimelb.studypartner.dao.Activity;
 import com.unimelb.studypartner.dao.Post;
 import com.unimelb.studypartner.service.bo.ActivityBO;
+import com.unimelb.studypartner.service.bo.MainPageBO;
 import com.unimelb.studypartner.service.bo.PostBO;
 import com.unimelb.studypartner.service.bo.SearchEntity;
 
@@ -34,4 +35,6 @@ public interface IMainPageService {
     public List<Activity> getSearchActivity(SearchEntity searchEntity) throws CommonException;
 
     public List<Post> getSearchPost(SearchEntity searchEntity) throws CommonException;
+
+    public MainPageBO getMainPage(int userId) throws CommonException;
 }
