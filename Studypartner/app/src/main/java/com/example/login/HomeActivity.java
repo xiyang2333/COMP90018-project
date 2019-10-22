@@ -15,6 +15,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
@@ -23,43 +24,72 @@ public class HomeActivity extends FragmentActivity {
     public FragmentTransaction mFragmentTransaction;
     public FragmentManager fragmentManager;
     public String curFragmentTag = "";
-
+    String currentFrag;
+    int userId;
     //private TextView mTextMessage;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_home);
+
+        Intent intent = getIntent();
+        userId = intent.getIntExtra("userId", 0);
+
+
+        BottomNavigationView navView = findViewById(R.id.nav_view);
+        //mTextMessage = findViewById(R.id.message);
+        navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+    }
+
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            Fragment selectedFragment=null;
+
+            Fragment selectedFragment = null;
+            Bundle bundle = new Bundle();
+            bundle.putInt("userId",userId);
             switch (item.getItemId()) {
                 case R.id.navigation_home:
                     selectedFragment = new HomeFragment();
+                    selectedFragment.setArguments(bundle);
                     break;
-                    //mTextMessage.setText(R.string.home);
+                //mTextMessage.setText(R.string.home);
 
                 case R.id.navigation_activity:
                     selectedFragment = new ActivityFragment();
+                    selectedFragment.setArguments(bundle);
                     break;
 
-                    //mTextMessage.setText(R.string.activity);
+                //mTextMessage.setText(R.string.activity);
 
                 case R.id.navigation_question:
                     selectedFragment = new QAFragment();
+                    selectedFragment.setArguments(bundle);
                     break;
-                    //mTextMessage.setText(R.string.q_a);
+                //mTextMessage.setText(R.string.q_a);
 
                 case R.id.navigation_me:
-                    selectedFragment= new MeFragment();
+                    selectedFragment = new MeFragment();
+                    selectedFragment.setArguments(bundle);
                     break;
-                    //mTextMessage.setText(R.string.account);
+                //mTextMessage.setText(R.string.account);
 
             }
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,selectedFragment).commit();
+            currentFrag = selectedFragment.toString();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment,currentFrag).commit();
             return true;
         }
     };
 
+<<<<<<< HEAD
+=======
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +104,7 @@ public class HomeActivity extends FragmentActivity {
     }
 
 
+>>>>>>> 35837a89add1b006c9ef74fd697c8c720e9cc5cd
 
 
 
