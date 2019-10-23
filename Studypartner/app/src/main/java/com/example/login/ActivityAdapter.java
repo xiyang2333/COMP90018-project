@@ -1,6 +1,7 @@
 package com.example.login;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +16,11 @@ import java.util.ArrayList;
 public class ActivityAdapter extends BaseAdapter implements View.OnClickListener{
 
     private Context context;
-    private ArrayList<MyMarker> data;
-    public ActivityAdapter(ArrayList<MyMarker> data){
+    private ArrayList<MyActivity> data;
+    private int userId;
+    public ActivityAdapter(ArrayList<MyActivity> data, int userId){
         this.data = data;
+        this.userId = userId;
     }
     @Override
     public int getCount() {
@@ -59,7 +62,11 @@ public class ActivityAdapter extends BaseAdapter implements View.OnClickListener
         switch (view.getId()){
             case R.id.btn_join_activity:
                 int b = (int) view.getTag(R.id.btn_2);
-                Toast.makeText(context,"我是按钮 " + b,Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, data.get(b).getTitle(),Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context,JoinSelectedActivity.class);
+                intent.putExtra("userId",userId);
+                intent.putExtra("activityId", data.get(b).getActivityId());
+                context.startActivity(intent);
                 break;
         }
     }

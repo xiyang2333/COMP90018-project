@@ -15,6 +15,7 @@ import com.example.service.entity.CreateActivityRequest;
 import com.example.service.entity.CreateActivityResponse;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 import static com.example.service.InterfaceURL.CREATE_ACTIVITY_URL;
 
@@ -56,6 +57,8 @@ public class CreateActivityActivity extends AppCompatActivity {
                             request.setUserId(userId);
                             request.setActivityName(title);
                             request.setActivityDescription(des);
+                            Date date = new Date(System.currentTimeMillis());
+                            request.setTime(date);
 
                             // set coordinate for activity location
                             request.setLatitude(new BigDecimal(latitude));

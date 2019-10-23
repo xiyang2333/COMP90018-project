@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.login">
-
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -21,13 +20,15 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="n">
-        <activity android:name=".JoinActivity"
-            android:label="Join activity"/>
+        <activity android:name=".ShowJoinActivity"></activity>
+        <activity android:name=".JoinSelectedActivity" />
+        <activity
+            android:name=".JoinActivity"
+            android:label="Join activity" />
         <activity
             android:name=".CreateActivityActivity"
             android:label="CreateActivityActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -42,8 +43,7 @@
 
         <activity
             android:name=".MapsActivity"
-            android:label="@string/title_activity_maps"></activity>
-
+            android:label="@string/title_activity_maps" />
         <activity android:name=".painting" />
         <activity android:name=".clicktag" />
         <activity

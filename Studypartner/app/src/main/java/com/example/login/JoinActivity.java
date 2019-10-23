@@ -25,7 +25,7 @@ import static com.example.service.InterfaceURL.SEARCH_ACTIVITY_URL;
 public class JoinActivity extends AppCompatActivity {
     private static final String TAG = "JoinActivity";
     private ListView mLvActivities;
-    private ArrayList<MyMarker> markersArray = new ArrayList<MyMarker>();
+    private ArrayList<MyActivity> activityArray = new ArrayList<>();
     private int userId;
 
     @Override
@@ -48,7 +48,7 @@ public class JoinActivity extends AppCompatActivity {
      * update marker array list from database when this activity created
      */
     private void updateMarkers() {
-        markersArray = new ArrayList<>();
+        activityArray = new ArrayList<>();
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -63,13 +63,14 @@ public class JoinActivity extends AppCompatActivity {
                             break;
                         } else {
                             if (activities.get(i).getLatitude() != null) {
-                                MyMarker marker = new MyMarker();
-                                marker.setTitle(activities.get(i).getActivityName());
-                                marker.setSnippet(activities.get(i).getActivityDescription());
-                                marker.setLatLng(new LatLng(activities.get(i).getLatitude().doubleValue(), activities.get(i).getLongitude().doubleValue()));
-                                markersArray.add(marker);
+                                MyActivity activity = new MyActivity();
+                                activity.setActivityId(activities.get(i).getActivityId());
+                                activity.setTitle(activities.get(i).getActivityName());
+                                activity.setSnippet(activities.get(i).getActivityDescription());
+                                activity.setLatLng(new LatLng(activities.get(i).getLatitude().doubleValue(), activities.get(i).getLongitude().doubleValue()));
+                                activityArray.add(activity);
                                 //createMarker(marker.getLatLng(), marker.getTitle(), marker.getSnippet());
-                                Log.d(TAG, "updateMarkers: no exception and show me marker list" + markersArray);
+                                Log.d(TAG, "updateMarkers: no exception and show me marker list" + activityArray);
 
                             }
                         }
@@ -80,11 +81,12 @@ public class JoinActivity extends AppCompatActivity {
                 } catch (Exception e) {
                     // run for test
                     Log.d(TAG, "updateMarkers: exception and show me marker list" + e.getMessage());
-                    MyMarker marker = new MyMarker();
-                    marker.setLatLng(new LatLng(-37.7963, 144.9614));
-                    marker.setSnippet("testDes");
-                    marker.setTitle("test");
-                    markersArray.add(marker);
+                    MyActivity activity = new MyActivity();
+                    activity.setLatLng(new LatLng(-37.7963, 144.9614));
+                    activity.setSnippet("testDes");
+                    activity.setTitle("test");
+                    activity.setActivityId(0);
+                    activityArray.add(activity);
                 }
             }
         }).start();
@@ -95,13 +97,12 @@ public class JoinActivity extends AppCompatActivity {
      */
     private Handler handler = new Handler(){
         public  void handleMessage(Message msg){
-            ActivityAdapter adapter = new ActivityAdapter(markersArray);
+            ActivityAdapter adapter = new ActivityAdapter(activityArray, userId);
             mLvActivities.setAdapter(adapter);
             // set list view items click listener
             mLvActivities.setOnItemClickListener(new ListView.OnItemClickListener(){
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    Toast.makeText(JoinActivity.this,"我是item点击事件 i = " + i + "l = " + l,Toast.LENGTH_SHORT).show();
                 }
             });
         }
