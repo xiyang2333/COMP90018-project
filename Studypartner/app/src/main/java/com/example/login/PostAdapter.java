@@ -81,7 +81,7 @@ public class PostAdapter extends BaseAdapter implements View.OnClickListener {
                 Intent intent = new Intent(mContext, PostDetail.class);
                 intent.putExtra("postId", postId);
 
-                System.out.println(postId + "在adapter 中的PostId");
+                //System.out.println(postId + "在adapter 中的PostId");
 
                 intent.putExtra("userId", userId);
                 mContext.startActivity(intent);

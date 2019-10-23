@@ -79,8 +79,8 @@ public class answerQuestionFragment extends Fragment {
             @Override
             public void run() {
                 SearchPostRequest searchQA = new SearchPostRequest();
-                System.out.println(tagId + "tagId is");
-                System.out.println(userInput + "用户输入是什么");
+                //System.out.println(tagId + "tagId is");
+                //System.out.println(userInput + "用户输入是什么");
                 searchQA.setTagId(tagId);
                 searchQA.setTitle(userInput);
 

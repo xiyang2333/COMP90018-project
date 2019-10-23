@@ -92,7 +92,7 @@ public class QAFragment extends Fragment {
             public boolean onQueryTextSubmit(String query) {
                 answerQuestionFragment ansQA = new answerQuestionFragment();
                 userInput = query;
-                System.out.println(userInput + "@@@@@@@@@@@@@@@@@@@");
+                //System.out.println(userInput + "@@@@@@@@@@@@@@@@@@@");
                 getFragmentManager().beginTransaction().addToBackStack(null).replace(R.id.fragment_container, ansQA.newInstance(userId, tagId, userInput)).commit();
                 return false;
             }

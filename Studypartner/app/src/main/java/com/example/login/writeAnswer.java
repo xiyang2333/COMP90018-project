@@ -29,7 +29,7 @@ public class writeAnswer extends AppCompatActivity {
             public void onClick(View v) {
 
                 String userAns = wrtiteAns.getText().toString();
-                System.out.println(userAns + "用户在写答案界面");
+                //System.out.println(userAns + "用户在写答案界面");
 
 
                 Intent i = new Intent();

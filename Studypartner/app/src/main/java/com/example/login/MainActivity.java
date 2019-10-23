@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
 
                         if (loginRes.getResponseStatus() == 1) {
                             Intent Loginscreen = new Intent(MainActivity.this, HomeActivity.class);
-                            System.out.println(loginRes.getUserId()+"???????");
+
                             Loginscreen.putExtra("userId", loginRes.getUserId());
                             startActivity(Loginscreen);
 

@@ -53,9 +53,9 @@ public class MeFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Bundle bundle = getArguments();
-        System.out.println("sssssssssssssssssssss");
+        //System.out.println("sssssssssssssssssssss");
         userId = bundle.getInt("userId");
-        System.out.println("sssssssssssssssssssss" + userId);
+        //System.out.println("sssssssssssssssssssss" + userId);
 
         View view = inflater.inflate(R.layout.fragment_me, container, false);
 
@@ -87,7 +87,7 @@ public class MeFragment extends Fragment {
                 msg.getData().putInt("userId",a);
 
                 handler.sendMessage(msg);
-                System.out.println("bbbbbbbbb" + msg);
+                //System.out.println("bbbbbbbbb" + msg);
 
 
 
@@ -105,7 +105,7 @@ public class MeFragment extends Fragment {
             Bundle bundle = msg.getData();
             userId = bundle.getInt("userId");
             name_str = bundle.getString("Name");
-            System.out.println("ccccccccccccccccccc"+ userId+name_str);
+            //System.out.println("ccccccccccccccccccc"+ userId+name_str);
             name.setText(name_str);
             super.handleMessage(msg);
         }
