@@ -2,6 +2,11 @@ package com.example.login;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.service.HttpClient;
+import com.example.service.entity.LoginCheckRequest;
+import com.example.service.entity.LoginCheckResponse;
+import com.example.service.entity.UpdateTagRequest;
+import com.example.service.entity.UpdateTagResponse;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -12,12 +17,16 @@ import com.google.android.gms.tasks.Task;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import static com.example.service.InterfaceURL.LOGIN_URL;
+import static com.example.service.InterfaceURL.UPDATE_TAG_URL;
 
 public class MainActivity extends AppCompatActivity {
     EditText mTextUsername;
@@ -26,10 +35,9 @@ public class MainActivity extends AppCompatActivity {
     TextView mTextViewRegister;
     DatabaseHelper db;
     GoogleSignInClient mGoogleSignInClient;
-    Button test;
 
-    int RC_SIGN_IN=0;
 
+    int RC_SIGN_IN = 0;
 
 
     @Override
@@ -37,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        db=new DatabaseHelper(this);
+        db = new DatabaseHelper(this);
         // Set the dimensions of the sign-in button.
         SignInButton signInButton = findViewById(R.id.sign_in_button);
         signInButton.setSize(SignInButton.SIZE_STANDARD);
@@ -52,46 +60,53 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        mTextUsername=(EditText)findViewById(R.id.edittext_username);
+        mTextUsername = (EditText) findViewById(R.id.edittext_username);
 
-        mTextPassword=(EditText)findViewById(R.id.edittext_password);
-        mButtonLogin=(Button)findViewById(R.id.button_login);
-        mTextViewRegister=(TextView) findViewById(R.id.textview_register);
+        mTextPassword = (EditText) findViewById(R.id.edittext_password);
+        mButtonLogin = (Button) findViewById(R.id.button_login);
+        mTextViewRegister = (TextView) findViewById(R.id.textview_register);
         mTextViewRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent registerIntent=new Intent(MainActivity.this,RegisterActivity.class);
+                Intent registerIntent = new Intent(MainActivity.this, RegisterActivity.class);
                 startActivity(registerIntent);
             }
         });
-
-
-        test = findViewById(R.id.test);
-        test.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                System.out.println("??????????????????????");
-                Intent registerIntent=new Intent(MainActivity.this,painting.class);
-                startActivity(registerIntent);
-            }
-        });
-
 
 
         mButtonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String user = mTextUsername.getText().toString().trim();
-                String pwd = mTextPassword.getText().toString().trim();
-                Boolean res = db.checkUser(user,pwd);
-                if (res==true){
-                    Intent Loginscreen = new Intent (MainActivity.this, HomeActivity.class);
-                    startActivity(Loginscreen);
-                }
-                else{
-                    Toast.makeText(MainActivity.this, "Login Error", Toast.LENGTH_SHORT).show();
-                }
+                final String user = mTextUsername.getText().toString().trim();
+                final String pwd = mTextPassword.getText().toString().trim();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        LoginCheckRequest loginRequest = new LoginCheckRequest();
+                        loginRequest.setUserLoginName(user);
+                        loginRequest.setUserPassword(pwd);
+
+                        LoginCheckResponse loginRes = HttpClient.httpPost(LOGIN_URL, loginRequest, LoginCheckRequest.class, LoginCheckResponse.class);
+
+                        if (loginRes.getResponseStatus() == 1) {
+                            Intent Loginscreen = new Intent(MainActivity.this, HomeActivity.class);
+                            System.out.println(loginRes.getUserId()+"???????");
+                            Loginscreen.putExtra("userId", loginRes.getUserId());
+                            startActivity(Loginscreen);
+
+                        } else {
+                            Looper.prepare();
+                            Toast.makeText(MainActivity.this, "Login Error", Toast.LENGTH_SHORT).show();
+                            Looper.loop();
+
+                        }
+
+                    }
+                }).start();
+
             }
+
         });
 
         // Configure sign-in to request the user's ID, email address, and basic
@@ -123,11 +138,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStart(){
+    protected void onStart() {
         super.onStart();
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-        if (account != null){
-            Intent Loginscreen = new Intent (MainActivity.this, HomeActivity.class);
+        if (account != null) {
+            Intent Loginscreen = new Intent(MainActivity.this, HomeActivity.class);
             startActivity(Loginscreen);
         }
 
@@ -156,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
 
             Toast.makeText(MainActivity.this, "You have logged in", Toast.LENGTH_SHORT).show();
-            Intent moveToHome = new Intent(MainActivity.this,HomeActivity.class);
+            Intent moveToHome = new Intent(MainActivity.this, HomeActivity.class);
             startActivity(moveToHome);
 
             // Signed in successfully, show authenticated UI.

@@ -77,7 +77,7 @@ public class PostDetail extends AppCompatActivity {
                 answerPart = response.getAnswerList();
                 if(answerPart != null){
                 for (int i = 0; i < answerPart.size(); i++) {
-                    answerUserId.add(answerPart.get(i).getUserId());
+                    answerUserId.add(answerPart.get(i).getUser().getUserId());
                     answer.add(answerPart.get(i).getAnswer());
                 }}
 
