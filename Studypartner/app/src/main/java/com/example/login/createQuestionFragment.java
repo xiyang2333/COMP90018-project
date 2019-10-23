@@ -35,15 +35,14 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.lang.reflect.Array;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.app.Activity.RESULT_CANCELED;
+
 import static androidx.constraintlayout.widget.Constraints.TAG;
 import static com.example.service.InterfaceURL.CREATE_POST_URL;
-import static com.example.service.InterfaceURL.UPDATE_TAG_URL;
-import static org.greenrobot.eventbus.EventBus.*;
+
 
 public class createQuestionFragment extends Fragment {
     Spinner choosetag;

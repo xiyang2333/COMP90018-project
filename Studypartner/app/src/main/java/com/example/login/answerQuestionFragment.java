@@ -127,7 +127,7 @@ public class answerQuestionFragment extends Fragment {
 
             mData = bundle.getStringArrayList("postList"); //mData 是一个存放 postName 的列表
             mPostId = bundle.getIntegerArrayList("postIdList");
-            System.out.println(mPostId.get(0)+" 在主界面的PostID");
+
             if (!mData.get(0).equals("There is not related question")) {
                 PostAdapter adapter = new PostAdapter(mData, userId,mPostId);
 

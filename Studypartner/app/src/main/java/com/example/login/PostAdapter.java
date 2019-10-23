@@ -22,11 +22,13 @@ public class PostAdapter extends BaseAdapter implements View.OnClickListener {
     int userId;
 
 
+
     public PostAdapter(ArrayList<String> mData, int userId, ArrayList<Integer> mPostId) {
 
         this.mData = mData;
         this.userId = userId;
         this.mPostId = mPostId;
+
     }
 
     public int getCount() {
