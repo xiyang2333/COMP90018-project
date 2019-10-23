@@ -39,6 +39,7 @@ import static com.example.service.InterfaceURL.SEARCH_POST_URL;
 public class PostDetail extends AppCompatActivity {
     int postId = 0;
     int userId = 0;
+    TextView temp;
 int count = 0;
     String postName;
     String postDescription;
@@ -52,7 +53,7 @@ int count = 0;
     TextView Posedes;
     MyListView answerList;
     ArrayList<String> temp_answer = new ArrayList<>();
-    ArrayList<Integer> temp_answerUserId = new ArrayList<>();
+    ArrayList<String> temp_answerUserName = new ArrayList<>();
 
 
     @Override
@@ -67,6 +68,7 @@ int count = 0;
 
         postname = findViewById(R.id.postName);
         answerList = findViewById(R.id.answerList);
+        temp = findViewById(R.id.ansTtile);
 
         getDate();
         wrtiteAnswer = findViewById(R.id.writeAnswer);
@@ -136,10 +138,10 @@ count = count +1;
 
 
                 if (answerPart != null) {
-                    temp_answerUserId = new ArrayList<>();
+                    temp_answerUserName = new ArrayList<>();
                     temp_answer = new ArrayList<>();
                     for (int i = 0; i < answerPart.size(); i++) {
-                        temp_answerUserId.add(answerPart.get(i).getUser().getUserId());
+                        temp_answerUserName.add(answerPart.get(i).getUser().getUserName());
                         temp_answer.add(answerPart.get(i).getAnswer());
                     }
                 }
@@ -149,7 +151,7 @@ count = count +1;
                 msg.getData().putString("postName", postName);
                 msg.getData().putString("postDescription", postDescription);
                 msg.getData().putStringArrayList("photoList", photoList);
-                msg.getData().putIntegerArrayList("answerUserId", temp_answerUserId);
+                msg.getData().putStringArrayList("temp_answerUserName", temp_answerUserName);
                 msg.getData().putStringArrayList("answer", temp_answer);
 
 
@@ -173,13 +175,14 @@ count = count +1;
             }
             Posedes.setText(postDescription);
             postname.setText(postName);
+            temp.setText("Answer From Others");
 
             ArrayList<String> answer = bundle.getStringArrayList("answer");
 
-            ArrayList<Integer> answerUserId = bundle.getIntegerArrayList("answerUserId");
+            ArrayList<String> answerUserName = bundle.getStringArrayList("temp_answerUserName");
             //System.out.println(answerUserId.size() + "传给adapter的长度是");
 
-            AnswerFlashAdapter adapter = new AnswerFlashAdapter(answer, answerUserId);
+            AnswerFlashAdapter adapter = new AnswerFlashAdapter(answer, answerUserName);
 
             answerList.setAdapter(adapter);
 

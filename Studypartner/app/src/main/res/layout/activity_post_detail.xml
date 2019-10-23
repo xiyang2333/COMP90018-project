@@ -18,13 +18,13 @@
         android:id="@+id/postName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="postName"
+
         android:textSize="50sp"/>
     <TextView
         android:id="@+id/postDes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="postDescription"
+
         android:layout_below="@+id/postName"
         android:textSize="25sp"/>
     <ImageView
@@ -36,7 +36,7 @@
         android:id="@+id/ansTtile"
         android:layout_below="@+id/pic"
         android:layout_width="match_parent"
-        android:text="Answer From Others"
+
         android:textSize="35sp"
         android:layout_height="wrap_content"/>
 

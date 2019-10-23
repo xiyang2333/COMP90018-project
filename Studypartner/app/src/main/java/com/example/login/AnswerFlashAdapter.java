@@ -16,17 +16,17 @@ import java.util.ArrayList;
 public class AnswerFlashAdapter extends BaseAdapter {
 
     private ArrayList<String> mData;
-    ArrayList<Integer> userId;
+    ArrayList<String> userName;
 
     private Context mContext;
 
 
 
 
-    public AnswerFlashAdapter(ArrayList<String> mData, ArrayList<Integer> userId) {
+    public AnswerFlashAdapter(ArrayList<String> mData, ArrayList<String> userName) {
 
         this.mData = mData;
-        this.userId = userId;
+        this.userName = userName;
 
 
     }
@@ -62,7 +62,7 @@ public class AnswerFlashAdapter extends BaseAdapter {
         viewHolder = (ViewHolder) view.getTag();
 
 
-        viewHolder.userID.setText(userId.get(position).toString());
+        viewHolder.userID.setText(userName.get(position));
 
         viewHolder.userAnswer.setText(mData.get(position));
 
