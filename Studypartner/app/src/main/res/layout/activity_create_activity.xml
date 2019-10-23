@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:background="@android:color/white">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/tv_createAct"
+        android:id="@+id/tv_create"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Create Activity:"
@@ -16,49 +18,35 @@
         />
 
     <EditText
-        android:id="@+id/edittext_activityTitle"
+        android:id="@+id/et_activityTitle"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:paddingLeft="2dp"
         android:layout_margin="10dp"
         android:layout_marginTop="10dp"
-        android:layout_below="@+id/tv_createAct"
+        android:layout_below="@+id/tv_create"
         android:background="#99ccff"
         android:drawableLeft="@drawable/ic_account_circle_black_24dp"
         android:hint="activity name: "/>
 
     <EditText
-        android:id="@+id/edittext_activityDes"
+        android:id="@+id/et_activityDes"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_margin="10dp"
         android:background="#99ccff"
-        android:layout_below="@+id/edittext_activityTitle"
+        android:layout_below="@+id/et_activityTitle"
         android:drawableLeft="@drawable/ic_account_circle_black_24dp"
         android:hint="activity description"/>
 
     <Button
-        android:id="@+id/button_create"
+        android:id="@+id/btn_create"
         android:layout_width="190dp"
         android:layout_height="40dp"
         android:layout_marginTop="20dp"
         android:background="#99ccff"
         android:textColor="#ff9900"
-        android:layout_below="@+id/edittext_activityDes"
+        android:layout_below="@+id/et_activityDes"
         android:layout_centerHorizontal="true"
         android:text="create"/>
-
-
-    <Button
-        android:id="@+id/map"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="50dp"
-        android:textColor="@android:color/holo_orange_dark"
-        android:layout_centerHorizontal="true"
-        android:text="Nearby Activities" />
-
-
-
 </RelativeLayout>
