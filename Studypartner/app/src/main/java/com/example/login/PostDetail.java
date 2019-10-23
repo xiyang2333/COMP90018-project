@@ -68,7 +68,8 @@ int count = 0;
 
         postname = findViewById(R.id.postName);
         answerList = findViewById(R.id.answerList);
-        temp = findViewById(R.id.ansTtile);
+        temp = findViewById(R.id.
+                ansTtile);
 
         getDate();
         wrtiteAnswer = findViewById(R.id.writeAnswer);
@@ -117,7 +118,6 @@ int count = 0;
 
     public void getDate() {
 count = count +1;
-//System.out.println(count+"被调取次数");
 
         new Thread(new Runnable() {
             @Override
@@ -134,8 +134,7 @@ count = count +1;
                 postDescription = response.getPostDescription();
                 photoList = (ArrayList) response.getPhotoList();
                 answerPart = response.getAnswerList();
-
-
+                
 
                 if (answerPart != null) {
                     temp_answerUserName = new ArrayList<>();
