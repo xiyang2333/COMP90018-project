@@ -242,4 +242,24 @@ public class ActivityAndPostDAL implements IActivityAndPostDAL {
         return postMapper.searchPost(tagId, offset, pageSize, longitudeRight, longitudeLeft, latitudeUp, latitudeDown);
     }
 
+    @Override
+    public List<Post> getPostByTagList(List<Integer> tagList) throws SQLException{
+        int[] ids = new int[tagList.size()];
+        int i = 0;
+        for(Integer tag : tagList){
+            ids[i++] = tag;
+        }
+        return postMapper.searchByids(ids);
+    }
+
+    @Override
+    public List<Activity> getActivityByTagList(List<Integer> tagList) throws SQLException {
+        int[] ids = new int[tagList.size()];
+        int i = 0;
+        for(Integer tag : tagList){
+            ids[i++] = tag;
+        }
+        return activityMapper.searchByids(ids);
+    }
+
 }

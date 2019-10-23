@@ -56,6 +56,18 @@ public class CoreController {
         return response;
     }
 
+    @RequestMapping(value = "/userinfo", method = RequestMethod.POST)
+    public UserPart userInfo(@RequestBody UserRequest userRequest) {
+        // new interface
+        // just return user
+        try {
+            UserPart userPart = userService.getUser(userRequest.getUserId());
+            return userPart;
+        } catch (CommonException ex) {
+            return new UserPart();
+        }
+    }
+
 //    @RequestMapping(value = "/searchmeeting", method = RequestMethod.POST)
 //    public SearchMeetingResponse searchMeeting(@RequestBody SearchMeetingRequest request) {
 //        SearchMeetingResponse response = new SearchMeetingResponse();
@@ -103,7 +115,7 @@ public class CoreController {
     public TagListResponse allTagGet() {
         TagListResponse tagListResponse = new TagListResponse();
         try {
-            List<Tag> tags =  userService.getAllTag();
+            List<Tag> tags = userService.getAllTag();
             tagListResponse.setTagList(tags);
             tagListResponse.setResponseStatus(0);
         } catch (CommonException e) {
@@ -179,7 +191,7 @@ public class CoreController {
     }
 
     @RequestMapping(value = "/useractivity", method = RequestMethod.POST)
-    public UserActivityResponse userActivity(@RequestBody UserActivityRequest request){
+    public UserActivityResponse userActivity(@RequestBody UserActivityRequest request) {
         UserActivityResponse response = new UserActivityResponse();
         try {
             int pageSize = request.getPageSize() == 0 ? 10 : request.getPageSize();
@@ -187,13 +199,13 @@ public class CoreController {
             List<Activity> activities = new ArrayList<>();
             // type == 0 || 1 means user create activity
             // type == 2 user join activity
-            if(request.getType() == 0 || request.getType() == 1) {
+            if (request.getType() == 0 || request.getType() == 1) {
                 activities = mainPageService.getUserActivity(request.getUserId(), pageSize, pageNumber);
-            } else if (request.getType() == 2){
+            } else if (request.getType() == 2) {
                 activities = mainPageService.getUserJoinActivity(request.getUserId(), pageSize, pageNumber);
             }
             List<ActivityPart> partList = new ArrayList<>();
-            for(Activity activity: activities){
+            for (Activity activity : activities) {
                 ActivityPart activityPart = new ActivityPart();
                 BeanUtils.copyProperties(activity, activityPart);
                 partList.add(activityPart);
@@ -210,14 +222,14 @@ public class CoreController {
     }
 
     @RequestMapping(value = "/userpost", method = RequestMethod.POST)
-    public UserPostResponse userPost(@RequestBody UserPostRequest request){
+    public UserPostResponse userPost(@RequestBody UserPostRequest request) {
         UserPostResponse response = new UserPostResponse();
         try {
             int pageSize = request.getPageSize() == 0 ? 10 : request.getPageSize();
             int pageNumber = request.getPageNumber() == 0 ? 1 : request.getPageNumber();
             List<Post> posts = mainPageService.getUserPost(request.getUserId(), pageSize, pageNumber);
             List<PostPart> partList = new ArrayList<>();
-            for(Post post: posts){
+            for (Post post : posts) {
                 PostPart postPart = new PostPart();
                 BeanUtils.copyProperties(post, postPart);
                 partList.add(postPart);
@@ -234,16 +246,16 @@ public class CoreController {
     }
 
     @RequestMapping(value = "/createactivity", method = RequestMethod.POST)
-    public CreateActivityResponse createActivity(@RequestBody CreateActivityRequest request){
+    public CreateActivityResponse createActivity(@RequestBody CreateActivityRequest request) {
         CreateActivityResponse response = new CreateActivityResponse();
-        try{
+        try {
             ActivityBO activityBO = new ActivityBO();
             BeanUtils.copyProperties(request, activityBO);
             int activityId = mainPageService.CreateActivity(activityBO, request.getUserList());
 
             response.setActivityId(activityId);
             response.setResponseStatus(0);
-        } catch (CommonException ex){
+        } catch (CommonException ex) {
             logger.error(ex.getWarnMessage());
 
             response.setResponseStatus(ex.getReturnStatus());
@@ -253,19 +265,19 @@ public class CoreController {
     }
 
     @RequestMapping(value = "/getactivity", method = RequestMethod.POST)
-    public GetActivityResponse getActivity(@RequestBody GetActivityRequest request){
+    public GetActivityResponse getActivity(@RequestBody GetActivityRequest request) {
         GetActivityResponse response = new GetActivityResponse();
-        try{
+        try {
             ActivityBO activityBO = mainPageService.getActivity(request.getActivityId(), request.getUserId());
             BeanUtils.copyProperties(activityBO, response);
-            if(activityBO.getCreateUser() != null){
+            if (activityBO.getCreateUser() != null) {
                 UserPart userPart = new UserPart();
                 BeanUtils.copyProperties(activityBO.getCreateUser(), userPart);
                 response.setCreateUser(userPart);
             }
-            if(activityBO.getUserBOList() != null && activityBO.getUserBOList().size() > 0){
+            if (activityBO.getUserBOList() != null && activityBO.getUserBOList().size() > 0) {
                 List<UserPart> userParts = new ArrayList<>();
-                for(UserBO userBO : activityBO.getUserBOList()){
+                for (UserBO userBO : activityBO.getUserBOList()) {
                     UserPart userPart = new UserPart();
                     BeanUtils.copyProperties(userBO, userPart);
 
@@ -274,7 +286,43 @@ public class CoreController {
                 response.setUserList(userParts);
             }
             response.setResponseStatus(0);
-        } catch (CommonException ex){
+        } catch (CommonException ex) {
+            logger.error(ex.getWarnMessage());
+
+            response.setResponseStatus(ex.getReturnStatus());
+            response.setErrorMessage(ex.getWarnMessage());
+        }
+        return response;
+    }
+
+    @RequestMapping(value = "/mainpage", method = RequestMethod.POST)
+    public MainPageResponse mainPage(@RequestBody MainPageRequest request) {
+        MainPageResponse response = new MainPageResponse();
+        try {
+            MainPageBO mainPageBO = mainPageService.getMainPage(request.getUserId());
+
+            if(mainPageBO.getActivityList() != null && mainPageBO.getActivityList().size() > 0){
+                List<ActivityPart> partList = new ArrayList<>();
+                for (Activity activity : mainPageBO.getActivityList()) {
+                    ActivityPart activityPart = new ActivityPart();
+                    BeanUtils.copyProperties(activity, activityPart);
+                    partList.add(activityPart);
+                }
+                response.setActivityList(partList);
+            }
+            if(mainPageBO.getPostList() != null && mainPageBO.getPostList().size() > 0){
+                List<PostPart> partList = new ArrayList<>();
+                for (Post post : mainPageBO.getPostList()) {
+                    PostPart postPart = new PostPart();
+                    BeanUtils.copyProperties(post, postPart);
+                    partList.add(postPart);
+                }
+                response.setPostList(partList);
+            }
+            response.setUserInterestedTag(mainPageBO.getUserInterestedTag());
+
+            response.setResponseStatus(0);
+        } catch (CommonException ex) {
             logger.error(ex.getWarnMessage());
 
             response.setResponseStatus(ex.getReturnStatus());
@@ -284,16 +332,16 @@ public class CoreController {
     }
 
     @RequestMapping(value = "/createpost", method = RequestMethod.POST)
-    public CreatePostResponse createPost(@RequestBody CreatePostRequest request){
+    public CreatePostResponse createPost(@RequestBody CreatePostRequest request) {
         CreatePostResponse response = new CreatePostResponse();
-        try{
+        try {
             PostBO postBO = new PostBO();
             BeanUtils.copyProperties(request, postBO);
             int id = mainPageService.CreatePost(postBO, request.getPhotoList());
             response.setPostId(id);
             response.setResponseStatus(0);
 
-        } catch (CommonException ex){
+        } catch (CommonException ex) {
 
             logger.error(ex.getWarnMessage());
 
@@ -304,27 +352,27 @@ public class CoreController {
     }
 
     @RequestMapping(value = "/getpost", method = RequestMethod.POST)
-    public GetPostResponse getPost(@RequestBody GetPostRequest request){
+    public GetPostResponse getPost(@RequestBody GetPostRequest request) {
         GetPostResponse response = new GetPostResponse();
-        try{
+        try {
             PostBO postBO = mainPageService.getPost(request.getPostId(), request.getUserId());
             BeanUtils.copyProperties(postBO, response);
             response.setPhotoList(postBO.getPhotoList());
 
-            if(postBO.getCreateUser() != null){
+            if (postBO.getCreateUser() != null) {
                 UserPart userPart = new UserPart();
                 BeanUtils.copyProperties(postBO.getCreateUser(), userPart);
                 response.setCreateUser(userPart);
             }
 
-            if(postBO.getAnswerBOList() != null && postBO.getAnswerBOList().size() > 0){
+            if (postBO.getAnswerBOList() != null && postBO.getAnswerBOList().size() > 0) {
                 List<AnswerPart> answerParts = new ArrayList<>();
-                for(AnswerBO answerBO : postBO.getAnswerBOList()){
+                for (AnswerBO answerBO : postBO.getAnswerBOList()) {
                     AnswerPart answerPart = new AnswerPart();
                     BeanUtils.copyProperties(answerBO, answerPart);
                     answerPart.setPhotoList(answerBO.getPhotoList());
 
-                    if(answerBO.getUser() != null){
+                    if (answerBO.getUser() != null) {
                         UserPart userPart = new UserPart();
                         BeanUtils.copyProperties(answerBO.getUser(), userPart);
                         answerPart.setUser(userPart);
@@ -334,7 +382,7 @@ public class CoreController {
 
                 response.setAnswerList(answerParts);
             }
-        } catch (CommonException ex){
+        } catch (CommonException ex) {
             logger.error(ex.getWarnMessage());
 
             response.setResponseStatus(ex.getReturnStatus());
@@ -344,21 +392,21 @@ public class CoreController {
     }
 
     @RequestMapping(value = "/searchactivity", method = RequestMethod.POST)
-    SearchActivityResponse searchActivity(@RequestBody SearchActivityRequest request){
+    SearchActivityResponse searchActivity(@RequestBody SearchActivityRequest request) {
         SearchActivityResponse response = new SearchActivityResponse();
         try {
             SearchEntity searchEntity = new SearchEntity();
             BeanUtils.copyProperties(request, searchEntity);
-            if(searchEntity.getPageSize() == 0){
+            if (searchEntity.getPageSize() == 0) {
                 searchEntity.setPageSize(10);
             }
-            if(searchEntity.getPageNumber() == 0){
+            if (searchEntity.getPageNumber() == 0) {
                 searchEntity.setPageNumber(1);
             }
             List<Activity> activityBOList = mainPageService.getSearchActivity(searchEntity);
 
             List<ActivityPart> partList = new ArrayList<>();
-            if(activityBOList != null && activityBOList.size() != 0) {
+            if (activityBOList != null && activityBOList.size() != 0) {
                 for (Activity activity : activityBOList) {
                     ActivityPart activityPart = new ActivityPart();
                     BeanUtils.copyProperties(activity, activityPart);
@@ -367,7 +415,7 @@ public class CoreController {
                 response.setResponseStatus(0);
                 response.setActivityList(partList);
             }
-        }catch (CommonException ex){
+        } catch (CommonException ex) {
             logger.error(ex.getWarnMessage());
 
             response.setResponseStatus(ex.getReturnStatus());
@@ -377,28 +425,28 @@ public class CoreController {
     }
 
     @RequestMapping(value = "/searchpost", method = RequestMethod.POST)
-    SearchPostResponse searchPostResponse(@RequestBody SearchPostRequest request){
+    SearchPostResponse searchPostResponse(@RequestBody SearchPostRequest request) {
         SearchPostResponse response = new SearchPostResponse();
-        try{
+        try {
             SearchEntity searchEntity = new SearchEntity();
             BeanUtils.copyProperties(request, searchEntity);
-            if(searchEntity.getPageSize() == 0){
+            if (searchEntity.getPageSize() == 0) {
                 searchEntity.setPageSize(10);
             }
-            if(searchEntity.getPageNumber() == 0){
+            if (searchEntity.getPageNumber() == 0) {
                 searchEntity.setPageNumber(1);
             }
             List<Post> posts = mainPageService.getSearchPost(searchEntity);
 
             List<PostPart> partList = new ArrayList<>();
-            for(Post post: posts){
+            for (Post post : posts) {
                 PostPart postPart = new PostPart();
                 BeanUtils.copyProperties(post, postPart);
                 partList.add(postPart);
             }
             response.setPostList(partList);
             response.setResponseStatus(0);
-        }catch (CommonException ex){
+        } catch (CommonException ex) {
             logger.error(ex.getWarnMessage());
 
             response.setResponseStatus(ex.getReturnStatus());

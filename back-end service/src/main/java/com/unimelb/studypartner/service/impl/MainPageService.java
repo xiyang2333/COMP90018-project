@@ -139,7 +139,7 @@ public class MainPageService implements IMainPageService {
             }
 
             int id = activityAndPostDAL.createActivity(activity, userList);
-            String content = "Name : " +  activity.getActivityName() + "; Description :" + activity.getActivityDescription();
+            String content = "Name : " + activity.getActivityName() + "; Description :" + activity.getActivityDescription();
             sendMQtt("ACTIVITY", id, content, activity.getTagId());
             return id;
         } catch (Exception ex) {
@@ -205,8 +205,8 @@ public class MainPageService implements IMainPageService {
                 }
             }
 
-            int id =  activityAndPostDAL.createPost(post, photoAddress);
-            String content = "Name : " +  post.getPostName() + "; Description :" + post.getPostDescription();
+            int id = activityAndPostDAL.createPost(post, photoAddress);
+            String content = "Name : " + post.getPostName() + "; Description :" + post.getPostDescription();
             sendMQtt("POST", id, content, post.getTagId());
             return id;
         } catch (Exception ex) {
@@ -246,7 +246,7 @@ public class MainPageService implements IMainPageService {
                         }
                         answerBO.setPhotoList(anwserPhotoList);
                     }
-                    if(answerBO.getUser().getUserPhoto() != null && answerBO.getUser().getUserPhoto().length() > 0){
+                    if (answerBO.getUser().getUserPhoto() != null && answerBO.getUser().getUserPhoto().length() > 0) {
                         answerBO.getUser().setUserPhoto(pictureService.getPic(answerBO.getUser().getUserPhoto()));
                     }
                 }
@@ -278,7 +278,7 @@ public class MainPageService implements IMainPageService {
         }
     }
 
-    public List<Post> getSearchPost(SearchEntity searchEntity) throws CommonException{
+    public List<Post> getSearchPost(SearchEntity searchEntity) throws CommonException {
         try {
             GeoEntity geoEntity = null;
             if (searchEntity.getLatitude() != null && searchEntity.getLongitude() != null) {
@@ -292,7 +292,32 @@ public class MainPageService implements IMainPageService {
 
             return posts;
 
-        }catch (Exception ex) {
+        } catch (Exception ex) {
+            throw new CommonException(ex.getMessage(), -1);
+        }
+    }
+
+    public MainPageBO getMainPage(int userId) throws CommonException {
+        try {
+            MainPageBO mainPageBO = new MainPageBO();
+            List<UserTag> tags = userService.rankGet(userId);
+            List<Integer> tagList = new ArrayList<>();
+            if (tags != null && tags.size() > 0) {
+                for (UserTag userTag : tags) {
+                    tagList.add(userTag.getTagId());
+                }
+                mainPageBO.setUserInterestedTag(tagList);
+
+            }
+            // get post
+            List<Post> posts = activityAndPostDAL.getPostByTagList(tagList);
+            mainPageBO.setPostList(posts);
+
+            // get activity
+            List<Activity> activities = activityAndPostDAL.getActivityByTagList(tagList);
+            mainPageBO.setActivityList(activities);
+            return mainPageBO;
+        } catch (Exception ex) {
             throw new CommonException(ex.getMessage(), -1);
         }
     }
@@ -309,15 +334,15 @@ public class MainPageService implements IMainPageService {
         return userBO;
     }
 
-    private void setRank(int tagId, int userId){
-        if(tagId != 0){
+    private void setRank(int tagId, int userId) {
+        if (tagId != 0) {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
                     try {
                         userService.rankSet(userId, tagId);
-                        ConcurrentHashMap<String,String> map = new ConcurrentHashMap<>();
-                        map.put("a","a");
+//                        ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
+//                        map.put("a", "a");
                     } catch (Exception e) {
                         logger.error(e);
                     }
@@ -326,16 +351,22 @@ public class MainPageService implements IMainPageService {
         }
     }
 
-    private void sendMQtt(String type, int id, String content, Integer tagId){
-        if(tagId != null && tagId != 0) {
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("type", type);
-            jsonObject.put("id", id);
-            jsonObject.put("content", content);
+    // use thread
+    private void sendMQtt(String type, int id, String content, Integer tagId) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if (tagId != null && tagId != 0) {
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.put("type", type);
+                    jsonObject.put("id", id);
+                    jsonObject.put("content", content);
 
-            String json = jsonObject.toJSONString();
-            MqttPushClient client = MqttPushClient.getInstance();
-            client.publish("topicID" + tagId, json);
-        }
+                    String json = jsonObject.toJSONString();
+                    MqttPushClient client = MqttPushClient.getInstance();
+                    client.publish("topicID" + tagId, json);
+                }
+            }
+        }).start();
     }
 }

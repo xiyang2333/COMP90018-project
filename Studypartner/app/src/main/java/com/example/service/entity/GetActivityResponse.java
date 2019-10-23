@@ -19,7 +19,9 @@ public class GetActivityResponse {
     private BigDecimal latitude;
     private BigDecimal longitude;
     private List<UserPart> userList;
+    private UserPart createUser;
     private int participantId;
+    private String picture;
 
     public int getResponseStatus() {
         return responseStatus;
@@ -101,11 +103,27 @@ public class GetActivityResponse {
         this.userList = userList;
     }
 
+    public UserPart getCreateUser() {
+        return createUser;
+    }
+
+    public void setCreateUser(UserPart createUser) {
+        this.createUser = createUser;
+    }
+
     public int getParticipantId() {
         return participantId;
     }
 
     public void setParticipantId(int participantId) {
         this.participantId = participantId;
+    }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
     }
 }

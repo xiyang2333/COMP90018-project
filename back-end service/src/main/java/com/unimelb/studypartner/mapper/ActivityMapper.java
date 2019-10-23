@@ -26,4 +26,6 @@ public interface ActivityMapper {
     List<Activity> searchActivity(@Param("tagId") Integer tagId, @Param("offset") int offset, @Param("pageSize") int pageSize,
                                   @Param("longitudeRight")BigDecimal longitudeRight, @Param("longitudeLeft")BigDecimal longitudeLeft,
                                   @Param("latitudeUp")BigDecimal latitudeUp, @Param("latitudeDown")BigDecimal latitudeDown);
+
+    List<Activity> searchByids(@Param("array") int[] ids);
 }

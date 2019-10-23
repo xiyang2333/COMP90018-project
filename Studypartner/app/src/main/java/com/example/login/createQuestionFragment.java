@@ -200,7 +200,10 @@ public class createQuestionFragment extends Fragment {
         }else if (finaltag.equals("Mechanics")) {
             return 7;
         }
-        else return 8;
+        else if (finaltag.equals("Art")) {
+            return 8;
+        }
+        else return 9;
 
     }
 

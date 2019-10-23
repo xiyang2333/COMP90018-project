@@ -1,5 +1,7 @@
 package com.example.service.entity;
 
+import com.unimelb.studypartner.dao.Tag;
+
 import java.util.List;
 
 /**

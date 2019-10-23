@@ -7,6 +7,7 @@ import com.unimelb.studypartner.dao.UserTag;
 import com.unimelb.studypartner.service.bo.MeetingBO;
 import com.unimelb.studypartner.service.bo.MeetingSearchBO;
 import com.unimelb.studypartner.service.bo.RegisterBO;
+import com.unimelb.studypartner.web.entity.UserPart;
 
 import java.util.List;
 
@@ -30,4 +31,6 @@ public interface IUserService {
     public void rankSet(int userId, int tagId) throws Exception ;
 
     public List<UserTag> rankGet(int userId) throws Exception ;
+
+    public UserPart getUser(int userId) throws CommonException;
 }

@@ -99,7 +99,9 @@ public class painting extends AppCompatActivity {
                     ByteArrayOutputStream bos = new ByteArrayOutputStream();
                     bitmap1.compress(Bitmap.CompressFormat.JPEG, 100, bos);
                     byte[] bytes = bos.toByteArray();
+
                     String map = Base64.encodeToString(bytes, Base64.NO_WRAP);
+
 
                     EventBus.getDefault().post(new Event(map));
                 }
@@ -450,7 +452,9 @@ public class painting extends AppCompatActivity {
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             bitmap1.compress(Bitmap.CompressFormat.JPEG, 100, bos);
             byte[] bytes = bos.toByteArray();
+
             return Base64.encodeToString(bytes, Base64.NO_WRAP);
+
         }
 
         return null;

@@ -89,6 +89,21 @@ public class HomeActivity extends FragmentActivity {
     };
 
 
+    /**@Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_home);
+        BottomNavigationView navView = findViewById(R.id.nav_view);
+        //mTextMessage = findViewById(R.id.message);
+        navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+    }*/
+
+
+
 
 
 }
