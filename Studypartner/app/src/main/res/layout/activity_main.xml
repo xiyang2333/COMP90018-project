@@ -33,7 +33,9 @@
         android:layout_marginTop="20dp"
         android:background="#ffffff"
         android:drawableLeft="@drawable/ic_lock_outline_black_24dp"
-        android:hint="@string/password"/>
+        android:hint="@string/password"
+        android:inputType="textPassword" />
+
 
     <Button
         android:id="@+id/button_login"

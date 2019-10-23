@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Looper;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -33,6 +34,7 @@ public class RegisterActivity extends AppCompatActivity {
         db=new DatabaseHelper(this);
         mTextUsername=(EditText)findViewById(R.id.edittext_username);
         mTextPassword=(EditText)findViewById(R.id.edittext_password);
+
         mTextCnfPassword=(EditText)findViewById(R.id.edittext_cnf_password);
         mButtonRegister=(Button)findViewById(R.id.button_register);
         mTextViewLogin=(TextView) findViewById(R.id.textview_login);
@@ -50,7 +52,9 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View view) {
                 final String user=mTextUsername.getText().toString().trim();
                 final String pwd=mTextPassword.getText().toString().trim();
+                mTextPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
                 String cnf_pwd=mTextCnfPassword.getText().toString().trim();
+                mTextCnfPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
                 if (pwd.equals(cnf_pwd)){
                     long val = db.addUser(user,pwd);
                     if(val>0){

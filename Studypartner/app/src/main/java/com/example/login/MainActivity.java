@@ -18,6 +18,7 @@ import com.google.android.gms.tasks.Task;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Looper;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -78,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 final String user = mTextUsername.getText().toString().trim();
+                mTextPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
                 final String pwd = mTextPassword.getText().toString().trim();
                 new Thread(new Runnable() {
                     @Override

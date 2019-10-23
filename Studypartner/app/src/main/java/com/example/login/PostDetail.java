@@ -134,7 +134,7 @@ count = count +1;
                 postDescription = response.getPostDescription();
                 photoList = (ArrayList) response.getPhotoList();
                 answerPart = response.getAnswerList();
-                
+
 
                 if (answerPart != null) {
                     temp_answerUserName = new ArrayList<>();

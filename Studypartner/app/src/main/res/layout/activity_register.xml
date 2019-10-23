@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
-    android:orientation="vertical"
     android:gravity="center_horizontal"
+    android:orientation="vertical"
     tools:context=".RegisterActivity">
 
     <ImageView
@@ -19,20 +19,21 @@
         android:id="@+id/edittext_username"
         android:layout_width="190dp"
         android:layout_height="40dp"
-        android:paddingLeft="2dp"
         android:layout_marginTop="30dp"
         android:background="#ffffff"
         android:drawableLeft="@drawable/ic_account_circle_black_24dp"
-        android:hint="@string/username"/>
+        android:hint="@string/username"
+        android:paddingLeft="2dp" />
 
     <EditText
-    android:id="@+id/edittext_password"
-    android:layout_width="190dp"
-    android:layout_height="40dp"
-    android:layout_marginTop="20dp"
-    android:background="#ffffff"
-    android:drawableLeft="@drawable/ic_lock_outline_black_24dp"
-    android:hint="@string/password"/>
+        android:id="@+id/edittext_password"
+        android:layout_width="190dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:background="#ffffff"
+        android:drawableLeft="@drawable/ic_lock_outline_black_24dp"
+        android:hint="@string/password"
+        android:inputType="textPassword" />
 
     <EditText
         android:id="@+id/edittext_cnf_password"
@@ -41,7 +42,8 @@
         android:layout_marginTop="20dp"
         android:background="#ffffff"
         android:drawableLeft="@drawable/ic_lock_outline_black_24dp"
-        android:hint="@string/confirm_password"/>
+        android:hint="@string/confirm_password"
+        android:inputType="textPassword" />
 
     <Button
         android:id="@+id/button_register"
@@ -49,31 +51,31 @@
         android:layout_height="40dp"
         android:layout_marginTop="20dp"
         android:background="#04ea00"
-        android:textColor="#ffffff"
-        android:text="@string/register"/>
+        android:text="@string/register"
+        android:textColor="#ffffff" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
 
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="35dp"
-            android:textColor="#ffffff"
-            android:text="@string/already_registered"/>
+            android:text="@string/already_registered"
+            android:textColor="#ffffff" />
 
         <TextView
             android:id="@+id/textview_login"
             android:layout_width="wrap_content"
             android:layout_height="35dp"
             android:paddingLeft="10dp"
+            android:text="@string/login"
             android:textColor="#04ea00"
-            android:textStyle="bold"
             android:textSize="16sp"
-            android:text="@string/login"/>
+            android:textStyle="bold" />
 
     </LinearLayout>
 
