@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    
+    <TextView
+        android:id="@+id/item_join_activity_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textSize="20sp"
+        android:text="test"
+        android:background="#99ccff"
+        />
+
+    <TextView
+        android:id="@+id/item_join_activity_des"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:text="test"
+        android:layout_below="@+id/item_join_activity_title"
+        android:background="#99ccff"
+        />
+
+    <Button
+        android:id="@+id/btn_join_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:background="@android:color/transparent"
+        android:textColor="#ff9900"
+        android:text="Join now"
+        android:layout_marginTop="10dp"
+        />
+
+
+
+</RelativeLayout>

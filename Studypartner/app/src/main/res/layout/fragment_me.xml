@@ -2,76 +2,108 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white">
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="216dp"
-        android:text="@string/me_profile"
-        android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/sign_out_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="160dp"
-        android:layout_marginLeft="160dp"
-        android:layout_marginTop="112dp"
-        android:text="sign out"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
-
+    android:background="@drawable/profile">
 
 
     <ImageView
-    android:id="@+id/icon1"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginStart="16dp"
-    android:layout_marginLeft="16dp"
-    android:layout_marginTop="16dp"
-    android:layout_marginEnd="16dp"
-    android:layout_marginRight="16dp"
-    android:layout_marginBottom="16dp"
-    app:layout_constraintBottom_toTopOf="@+id/textView2"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    tools:srcCompat="@tools:sample/avatars" />
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="127dp"
-        android:layout_marginTop="50dp"
-        app:srcCompat="@drawable/logo" />
+        android:id="@+id/imageView1"
+        android:layout_width="135dp"
+        android:layout_height="114dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:src="@drawable/touxiang" />
 
     <TextView
         android:id="@+id/textName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="164dp"
-        android:layout_marginLeft="164dp"
-        android:layout_marginTop="72dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:text="My name"
-        android:textSize="30sp"
-        android:layout_below="@+id/icon1"
+        android:layout_below="@+id/imageView1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="Name"
 
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView2" />
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/textName"
+        android:text="My Questions"
+
+        android:layout_marginTop="12dp" />
+
+
+    <TextView
+        android:id="@+id/content1"
+        android:layout_width="341dp"
+        android:layout_height="91dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/textView1"
+
+        android:ellipsize="end"
+        android:maxLines="4"
+        android:gravity="center"
+
+        android:textStyle="italic"
+        android:textIsSelectable="true"
+        android:text="Arts-TEST1\n\tTEST111\nChemistry-Assignment Meeting 2\n\tI have a question about...." />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/content1"
+        android:text="Show More" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/button1"
+        android:text="My Activities"
+
+        android:layout_marginTop="12dp" />
+
+
+    <TextView
+        android:id="@+id/content2"
+        android:layout_width="341dp"
+        android:layout_height="91dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/textView2"
+
+        android:ellipsize="end"
+        android:maxLines="4"
+        android:gravity="center"
+
+        android:textStyle="italic"
+        android:textIsSelectable="true"
+        android:text="Mobile development\nWe are hosting an tutorial for students...\nAI Assignment2 Discussion\nThis is a discussion for students to discuss..." />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/content2"
+        android:text="Show More" />
+
+    <Button
+        android:id="@+id/sign_out_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="sign out"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/textName"
+        android:layout_marginTop="350dp"/>
+
 
 
 </RelativeLayout>

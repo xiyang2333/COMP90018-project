@@ -1,3 +1,4 @@
+
 package com.example.login;
 
 import android.content.Intent;
@@ -37,8 +38,8 @@ import static com.example.service.InterfaceURL.USER_INFO_URL;
 
 public class MeFragment extends Fragment {
     GoogleSignInClient mGoogleSignInClient;
-    ImageView imageView;
-    TextView name, email, id;
+
+    TextView name, id;
     int userId, a;
     String name_str;
     Button sign_out_button;
@@ -110,7 +111,6 @@ public class MeFragment extends Fragment {
         }
     };
 
-
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -133,6 +133,7 @@ public class MeFragment extends Fragment {
             }
         });
 
+
         sign_out_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -144,8 +145,6 @@ public class MeFragment extends Fragment {
 
 
 
-
-        imageView = getActivity().findViewById(R.id.icon1);
         // name = getActivity().findViewById(R.id.textName);
 
         GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getActivity());
@@ -157,8 +156,8 @@ public class MeFragment extends Fragment {
             String personId = acct.getId();
             Uri personPhoto = acct.getPhotoUrl();
             //  name.setText(personName);
-            email.setText(personEmail);
-           //Glide.with(this).load(String.valueOf(personPhoto)).into(imageView);
+           // email.setText(personEmail);
+
 
         }
     }
@@ -173,14 +172,6 @@ public class MeFragment extends Fragment {
                 });
     }
 
-    private void revokeAccess() {
-        mGoogleSignInClient.revokeAccess()
-                .addOnCompleteListener(getActivity(), new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        Toast.makeText(getActivity(), "You have disconnected", Toast.LENGTH_SHORT).show();
-                    }
-                });
-    }
+
 }
 

@@ -27,7 +27,7 @@ public class MyMarker {
         return snippet;
     }
 
-    public void setSnippet(String title) {
-        this.title = snippet;
+    public void setSnippet(String snippet) {
+        this.snippet = snippet;
     }
 }
