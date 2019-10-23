@@ -105,9 +105,9 @@ int count = 0;
                 request.setUserId(userId);
                 request.setPostId(postId);
                 request.setAnswer(s);
-                System.out.println(s + "????????????????");
+                //System.out.println(s + "????????????????");
                 AnswerPostResponse response = HttpClient.httpPost(ANSWER_POST_URL, request, AnswerPostRequest.class, AnswerPostResponse.class);
-                System.out.println(" 用户答案上传状态" + response.getResponseStatus());
+                //System.out.println(" 用户答案上传状态" + response.getResponseStatus());
 
             }
         }).start();
@@ -115,14 +115,14 @@ int count = 0;
 
     public void getDate() {
 count = count +1;
-System.out.println(count+"被调取次数");
+//System.out.println(count+"被调取次数");
 
         new Thread(new Runnable() {
             @Override
             public void run() {
                 GetPostRequest request = new GetPostRequest();
-                System.out.println("postId is " + postId);
-                System.out.println("用户id 是" + userId);
+                //System.out.println("postId is " + postId);
+                //System.out.println("用户id 是" + userId);
                 request.setUserId(userId);
                 request.setPostId(postId);
 
@@ -133,7 +133,7 @@ System.out.println(count+"被调取次数");
                 photoList = (ArrayList) response.getPhotoList();
                 answerPart = response.getAnswerList();
 
-                System.out.println((answerPart.size())+"返回的答案的长度");
+
 
                 if (answerPart != null) {
                     temp_answerUserId = new ArrayList<>();
@@ -177,7 +177,7 @@ System.out.println(count+"被调取次数");
             ArrayList<String> answer = bundle.getStringArrayList("answer");
 
             ArrayList<Integer> answerUserId = bundle.getIntegerArrayList("answerUserId");
-            System.out.println(answerUserId.size() + "传给adapter的长度是");
+            //System.out.println(answerUserId.size() + "传给adapter的长度是");
 
             AnswerFlashAdapter adapter = new AnswerFlashAdapter(answer, answerUserId);
 
