@@ -18,4 +18,5 @@ public interface InterfaceURL {
     public static String SEARCH_POST_URL = IP + "/searchpost";
     public static String USER_ACTIVITY_URL = IP + "/useractivity";
     public static String USER_POST_URL = IP + "/userpost";
+    public static String USER_INFO_URL = IP + "/userinfo";
 }

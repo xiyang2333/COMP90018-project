@@ -26,6 +26,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.io.ByteArrayOutputStream;
 
 public class painting extends AppCompatActivity {
@@ -81,18 +83,26 @@ public class painting extends AppCompatActivity {
 
     }
 
-    void init_view_id(){
+    void init_view_id() {
 
         save = findViewById(R.id.save);
-        Intent intent = getIntent();
 
-        save.setOnClickListener(new View.OnClickListener(){
+
+        save.setOnClickListener(new View.OnClickListener() {
 
 
             @Override
             public void onClick(View v) {
 
-                String map= save(iv);
+
+                if (bitmap1 != null) {
+                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                    bitmap1.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+                    byte[] bytes = bos.toByteArray();
+                    String map = Base64.encodeToString(bytes, Base64.NO_WRAP);
+
+                    EventBus.getDefault().post(new Event(map));
+                }
 
                 painting.this.setResult(1);
                 painting.this.finish();
@@ -251,7 +261,7 @@ public class painting extends AppCompatActivity {
 
     //-----NumberPicker数字选择器---------------------------------------------------------
     public void numberpick() {
-        final Dialog d = new Dialog( painting.this);
+        final Dialog d = new Dialog(painting.this);
         d.setContentView(R.layout.paint_size_select);
         Button bb1 = (Button) d.findViewById(R.id.button1);
         Button bb2 = (Button) d.findViewById(R.id.button2);
@@ -268,7 +278,7 @@ public class painting extends AppCompatActivity {
                 number = np.getValue();
                 paint.setStrokeWidth(number);
 
-                Toast.makeText( painting.this, "The width of painting brush is：" + number, Toast.LENGTH_SHORT).show();
+                Toast.makeText(painting.this, "The width of painting brush is：" + number, Toast.LENGTH_SHORT).show();
                 d.dismiss();
             }
         });
@@ -297,44 +307,44 @@ public class painting extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.green:
                 green(iv);
-                Toast.makeText( painting.this, "The colour has changed into green", Toast.LENGTH_SHORT).show();
+                Toast.makeText(painting.this, "The colour has changed into green", Toast.LENGTH_SHORT).show();
 
                 break;
             case R.id.red:
                 red(iv);
-                Toast.makeText( painting.this, "The colour has changed into red", Toast.LENGTH_SHORT).show();
+                Toast.makeText(painting.this, "The colour has changed into red", Toast.LENGTH_SHORT).show();
 
                 break;
             case R.id.yellow:
                 yellow(iv);
-                Toast.makeText( painting.this, "The colour has changed into yellow", Toast.LENGTH_SHORT).show();
+                Toast.makeText(painting.this, "The colour has changed into yellow", Toast.LENGTH_SHORT).show();
 
                 break;
             case R.id.black:
                 black(iv);
-                Toast.makeText( painting.this, "The colour has changed into black", Toast.LENGTH_SHORT).show();
+                Toast.makeText(painting.this, "The colour has changed into black", Toast.LENGTH_SHORT).show();
 
                 break;
 
             case R.id.size5:
                 brush5(iv);
-                Toast.makeText( painting.this, "The width has changed into 5", Toast.LENGTH_SHORT).show();
+                Toast.makeText(painting.this, "The width has changed into 5", Toast.LENGTH_SHORT).show();
 
                 break;
             case R.id.size10:
                 brush10(iv);
-                Toast.makeText( painting.this, "The width has changed into 10", Toast.LENGTH_SHORT).show();
+                Toast.makeText(painting.this, "The width has changed into 10", Toast.LENGTH_SHORT).show();
 
                 break;
             case R.id.size20:
                 brush20(iv);
-                Toast.makeText( painting.this, "The width has changed into 20", Toast.LENGTH_SHORT).show();
+                Toast.makeText(painting.this, "The width has changed into 20", Toast.LENGTH_SHORT).show();
 
                 break;
             case R.id.clear:
                 clear(iv);
                 paintLine();
-                Toast.makeText( painting.this, "Change into the eraser", Toast.LENGTH_SHORT).show();
+                Toast.makeText(painting.this, "Change into the eraser", Toast.LENGTH_SHORT).show();
 
                 break;
             case R.id.clearall:
@@ -348,12 +358,12 @@ public class painting extends AppCompatActivity {
             case R.id.real_line:
                 recover();
                 paintrealLine();
-                Toast.makeText( painting.this, "Solid line", Toast.LENGTH_SHORT).show();
+                Toast.makeText(painting.this, "Solid line", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.dotted_line:
                 recover();
                 paintdottedLine();
-                Toast.makeText( painting.this, "Dotted line", Toast.LENGTH_SHORT).show();
+                Toast.makeText(painting.this, "Dotted line", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.smooth_line:
                 recover();
@@ -440,7 +450,7 @@ public class painting extends AppCompatActivity {
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             bitmap1.compress(Bitmap.CompressFormat.JPEG, 100, bos);
             byte[] bytes = bos.toByteArray();
-            return Base64.encodeToString(bytes,Base64.DEFAULT);
+            return Base64.encodeToString(bytes, Base64.NO_WRAP);
         }
 
         return null;

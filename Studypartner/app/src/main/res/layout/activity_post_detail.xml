@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+
+
+    <TextView
+        android:id="@+id/postName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="postName"
+        android:textSize="50sp"/>
+    <TextView
+        android:id="@+id/postDes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="postDescription"
+        android:layout_below="@+id/postName"
+        android:textSize="25sp"/>
+    <ImageView
+        android:id="@+id/pic"
+        android:layout_below="@+id/postDes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/ansTtile"
+        android:layout_below="@+id/pic"
+        android:layout_width="match_parent"
+        android:text="Answer From Others"
+        android:textSize="35sp"
+        android:layout_height="wrap_content"/>
+
+
+
+
+    </RelativeLayout>
+</ScrollView>
+    <Button
+        android:id="@+id/writeAnswer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="Write my answer"
+        />
+
+</RelativeLayout>
