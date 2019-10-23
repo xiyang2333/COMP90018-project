@@ -5,7 +5,8 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomeActivity">
+    tools:context="HomeActivity"
+    android:background="@drawable/mainback">
 
 
 
@@ -13,10 +14,11 @@
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/nav_view"/>
+        android:background="@drawable/mainback"
+        android:layout_above="@id/nav_view"
 
 
-
+        />
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -24,6 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_marginBottom="-7dp"
         android:background="?android:attr/windowBackground"
         app:menu="@menu/bottom_nav_menu" />
 
