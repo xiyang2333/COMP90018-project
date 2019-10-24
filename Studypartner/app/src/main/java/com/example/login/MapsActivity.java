@@ -56,6 +56,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private ArrayList<MyMarker> markersArray = new ArrayList<MyMarker>();
     private Button mBtnCreate;
     private Button mBtnJoin;
+    private Button mBtnGoHome;
 
 
     protected void createMarker(LatLng lng, String title, String snippet) {
@@ -73,8 +74,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         setContentView(R.layout.activity_maps);
         mBtnCreate = findViewById(R.id.create_btn);
         mBtnJoin = findViewById(R.id.join_btn);
+        mBtnGoHome = findViewById(R.id.gohome_btn);
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         userId = getIntent().getIntExtra("userId",0);
+
         Log.d(TAG, "onCreate: userId" + userId);
         getLocationPermissions();
         updateMarkers();
@@ -221,8 +225,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MapsActivity.this, CreateActivityActivity.class);
+                Log.d(TAG, "onClick: create button is clicked");
                 if(selectPos == null){
-                    Toast.makeText(MapsActivity.this,"Please select a location",Toast.LENGTH_LONG);
+                    Toast.makeText(MapsActivity.this,"Please select a location",Toast.LENGTH_LONG).show();
                 }else{
                     intent.putExtra("latitude",selectPos.latitude);
                     intent.putExtra("longitude",selectPos.longitude);
@@ -240,6 +245,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MapsActivity.this, JoinActivity.class);
+                intent.putExtra("userId", userId);
+                startActivity(intent);
+            }
+        });
+
+        /**
+         * back to home activity
+         */
+        mBtnGoHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MapsActivity.this, HomeActivity.class);
                 intent.putExtra("userId", userId);
                 startActivity(intent);
             }
