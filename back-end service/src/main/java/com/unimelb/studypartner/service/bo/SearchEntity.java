@@ -7,6 +7,7 @@ import java.math.BigDecimal;
  */
 public class SearchEntity {
     private int tagId;
+    private String title;
     private int userId;
     private int pageSize;
     private int pageNumber;
@@ -19,6 +20,14 @@ public class SearchEntity {
 
     public void setTagId(int tagId) {
         this.tagId = tagId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public int getUserId() {

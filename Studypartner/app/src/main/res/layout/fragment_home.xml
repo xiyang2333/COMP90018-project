@@ -8,9 +8,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/mainback"
-        />
+        >
 
 
+    </FrameLayout>
 
+    <ListView
+        android:id="@+id/postList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="400dp"
+        android:visibility="visible" />
 
 </RelativeLayout>

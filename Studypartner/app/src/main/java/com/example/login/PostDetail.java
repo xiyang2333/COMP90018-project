@@ -170,7 +170,9 @@ count = count +1;
             photoList = bundle.getStringArrayList("photoList");
             if (photoList != null) {
                 String str = photoList.get(0);
-                pic.setImageBitmap(base64ToBitmap(str));
+                if(str != null && str.length() > 0) {
+                    pic.setImageBitmap(base64ToBitmap(str));
+                }
             }
             Posedes.setText(postDescription);
             postname.setText(postName);

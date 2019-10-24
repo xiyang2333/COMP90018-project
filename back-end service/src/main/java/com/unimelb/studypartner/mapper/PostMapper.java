@@ -21,9 +21,9 @@ public interface PostMapper {
 
     List<Post> selctByUserId(@Param("userId") Integer userId, @Param("offset") int offset, @Param("pageSize") int pageSize);
 
-    List<Post> searchPost(@Param("tagId") Integer tagId, @Param("offset") int offset, @Param("pageSize") int pageSize,
-                                  @Param("longitudeRight") BigDecimal longitudeRight, @Param("longitudeLeft")BigDecimal longitudeLeft,
-                                  @Param("latitudeUp")BigDecimal latitudeUp, @Param("latitudeDown")BigDecimal latitudeDown);
+    List<Post> searchPost(@Param("tagId") Integer tagId, @Param("title") String title, @Param("offset") int offset, @Param("pageSize") int pageSize,
+                          @Param("longitudeRight") BigDecimal longitudeRight, @Param("longitudeLeft") BigDecimal longitudeLeft,
+                          @Param("latitudeUp") BigDecimal latitudeUp, @Param("latitudeDown") BigDecimal latitudeDown);
 
     List<Post> searchByids(@Param("array") int[] ids);
 }

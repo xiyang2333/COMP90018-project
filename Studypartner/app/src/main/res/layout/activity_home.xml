@@ -18,7 +18,26 @@
         android:layout_above="@id/nav_view"
 
 
-        />
+        >
+
+
+        <ListView
+            android:id="@+id/activityList"
+            android:layout_width="331dp"
+            android:layout_height="254dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="125dp"
+            android:visibility="visible" />
+
+        <ListView
+            android:id="@+id/postList"
+            android:layout_width="331dp"
+            android:layout_height="254dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="400dp"
+            android:visibility="visible" />
+
+    </FrameLayout>
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

@@ -41,15 +41,19 @@ public class PictureService {
     }
 
     public String getPic(String filePath) throws Exception{
-        File file=new File(filePath);
-        if(!file.exists()){
-            Exception ex = new Exception("file not exists");
-            throw ex;
-        }
-        int length = (int) file.length();
-        byte[] data = new byte[length];
-        new FileInputStream(file).read(data);
+        try {
+            File file = new File(filePath);
+            if (!file.exists()) {
+                Exception ex = new Exception("file not exists");
+                throw ex;
+            }
+            int length = (int) file.length();
+            byte[] data = new byte[length];
+            new FileInputStream(file).read(data);
 
-        return encoder.encodeToString(data);
+            return encoder.encodeToString(data);
+        } catch (Exception ex){
+            return null;
+        }
     }
 }

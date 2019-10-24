@@ -217,14 +217,14 @@ public class ActivityAndPostDAL implements IActivityAndPostDAL {
             latitudeDown = geoEntity.getLatitudeDown();
         }
         Integer tagId = null;
-        if(searchEntity.getTagId() != 0){
+        if (searchEntity.getTagId() != 0) {
             tagId = searchEntity.getTagId();
         }
         return activityMapper.searchActivity(tagId, offset, pageSize, longitudeRight, longitudeLeft, latitudeUp, latitudeDown);
     }
 
     @Override
-    public List<Post> getSearchPost(SearchEntity searchEntity, GeoEntity geoEntity, int offset, int pageSize) throws SQLException{
+    public List<Post> getSearchPost(SearchEntity searchEntity, GeoEntity geoEntity, int offset, int pageSize) throws SQLException {
         BigDecimal longitudeRight = null;
         BigDecimal longitudeLeft = null;
         BigDecimal latitudeUp = null;
@@ -236,17 +236,17 @@ public class ActivityAndPostDAL implements IActivityAndPostDAL {
             latitudeDown = geoEntity.getLatitudeDown();
         }
         Integer tagId = null;
-        if(searchEntity.getTagId() != 0){
+        if (searchEntity.getTagId() != 0) {
             tagId = searchEntity.getTagId();
         }
-        return postMapper.searchPost(tagId, offset, pageSize, longitudeRight, longitudeLeft, latitudeUp, latitudeDown);
+        return postMapper.searchPost(tagId, "%" + searchEntity.getTitle() + "%", offset, pageSize, longitudeRight, longitudeLeft, latitudeUp, latitudeDown);
     }
 
     @Override
-    public List<Post> getPostByTagList(List<Integer> tagList) throws SQLException{
+    public List<Post> getPostByTagList(List<Integer> tagList) throws SQLException {
         int[] ids = new int[tagList.size()];
         int i = 0;
-        for(Integer tag : tagList){
+        for (Integer tag : tagList) {
             ids[i++] = tag;
         }
         return postMapper.searchByids(ids);
@@ -256,7 +256,7 @@ public class ActivityAndPostDAL implements IActivityAndPostDAL {
     public List<Activity> getActivityByTagList(List<Integer> tagList) throws SQLException {
         int[] ids = new int[tagList.size()];
         int i = 0;
-        for(Integer tag : tagList){
+        for (Integer tag : tagList) {
             ids[i++] = tag;
         }
         return activityMapper.searchByids(ids);
