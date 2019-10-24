@@ -59,6 +59,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:text="Write my answer"
+        android:background="@android:color/transparent"
         />
 
 </RelativeLayout>
