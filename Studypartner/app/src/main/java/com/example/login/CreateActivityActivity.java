@@ -68,14 +68,14 @@ public class CreateActivityActivity extends AppCompatActivity {
                             CreateActivityResponse response = HttpClient.httpPost(CREATE_ACTIVITY_URL, request, CreateActivityRequest.class, CreateActivityResponse.class);
 
                             Log.d(TAG, "onClick: tell me activity is created" + response);
-                            Intent intent = new Intent(CreateActivityActivity.this, MapsActivity.class);
+                            Intent intent = new Intent(CreateActivityActivity.this, ShowCreateActivity.class);
                             intent.putExtra("userId", userId);
                             CreateActivityActivity.this.startActivityForResult(intent, 1);
                         }
                     }).start();
-                    Toast.makeText(CreateActivityActivity.this,"activity created", Toast.LENGTH_SHORT);
+                    Toast.makeText(CreateActivityActivity.this,"activity created", Toast.LENGTH_SHORT).show();
                 }else {
-                    Toast.makeText(CreateActivityActivity.this, "fail to create activity", Toast.LENGTH_SHORT);
+                    Toast.makeText(CreateActivityActivity.this, "fail to create activity, try again", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "onClick: activity is not created");
                 }
             }

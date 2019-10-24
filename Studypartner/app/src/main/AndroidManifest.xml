@@ -26,6 +26,8 @@
 
         <activity android:name=".ShowJoinActivity"></activity>
         <activity android:name=".JoinSelectedActivity" />
+        <activity android:name="ShowCreateActivity"
+            android:label="ShowCreateActivity"/>
         <activity
             android:name=".JoinActivity"
             android:label="Join activity" />
