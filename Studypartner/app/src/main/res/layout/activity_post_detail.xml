@@ -47,19 +47,20 @@
         android:layout_below="@+id/ansTtile" />
 
 
+        <Button
+            android:id="@+id/writeAnswer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/answerList"
+            android:layout_centerHorizontal="true"
+            android:text="Write my answer"
+            android:textSize="20sp"
 
+            />
 
     </RelativeLayout>
 </ScrollView>
 
-    <Button
-        android:id="@+id/writeAnswer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:text="Write my answer"
-        android:background="@android:color/transparent"
-        />
+
 
 </RelativeLayout>
