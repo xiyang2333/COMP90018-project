@@ -221,7 +221,7 @@ public class HomeActivity extends FragmentActivity {
             mTextView.setText(mData.get(position));
             mTextView.setTextSize(20f);
             mTextView.setGravity(Gravity.CENTER);
-            mTextView.setHeight(60);
+            mTextView.setHeight(80);
             return mTextView;
         }
     }
